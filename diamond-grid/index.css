@@ -1,0 +1,119 @@
+/* =========================================
+   1. GLOBAL BODY STYLES (The Centering Trick)
+   ========================================= */
+body {
+	/* Removes the default empty space (usually 8 pixels) that browsers automatically 
+       add around the edges of the webpage. This ensures our layout touches the screen edges. */
+	margin: 0;
+
+	/* 'vh' stands for Viewport Height. 100vh means 100% of the screen's height.
+       This forces the body tag to stretch all the way to the bottom of your screen, 
+       even if you only have a little bit of content inside it. */
+	min-height: 100vh;
+
+	/* Turns the entire body into a CSS Grid container. By default, this turns the 
+       whole screen into one giant invisible box where we can easily align things. */
+	display: grid;
+
+	/* A powerful CSS Grid shortcut. It takes the contents of the body (your gallery) 
+       and aligns it dead-center both vertically and horizontally on the screen. */
+	place-items: center;
+}
+
+/* =========================================
+   2. GLOBAL IMAGE STYLES (Responsiveness)
+   ========================================= */
+img {
+	/* A safety rule for all images on the site. It ensures that an image can NEVER 
+       grow wider than the box it is placed inside. If the screen shrinks, the image 
+       shrinks with it, preventing annoying horizontal scrollbars. */
+	max-width: 100%;
+}
+
+/* =========================================
+   3. THE GALLERY GRID
+   ========================================= */
+.gallery {
+	/* This creates a custom CSS Variable (like a storage box). We name it '--image-size' 
+       and set it to 100px. We can reuse this word later instead of typing 100px again. */
+	--image-size: 100px;
+
+	/* Turns the gallery container itself into a CSS Grid so we can organize 
+       the images into neat columns and rows. */
+	display: grid;
+
+	/* Creates a large amount of empty space (gap) between the rows and columns. 
+       Because we set the row heights to 0 later on, this gap is what actually pushes 
+       the images apart vertically to create the honeycomb pattern. */
+	gap: 6.5rem;
+
+	/* Creates exactly 6 columns. 
+       We use the 'repeat' function to say: "Make 6 columns, and make each one the 
+       width of our variable (100px)." */
+	grid-template-columns: repeat(6, var(--image-size));
+
+	/* Creates 3 rows, but forces their height to be exactly 0 pixels. 
+       This is a clever trick: by making the rows 0px tall but giving them a massive 
+       'gap' (above), we can make the images artificially overlap to create a staggered grid. */
+	grid-template-rows: repeat(3, 0px);
+
+	/* =========================================
+       4. NESTED GALLERY IMAGES
+       These rules only apply to 'img' tags that live INSIDE the '.gallery' box.
+       ========================================= */
+	img {
+		/* Forces the image to always be a perfect square (1 unit wide for every 1 unit tall), 
+           no matter what its original rectangular shape was. */
+		aspect-ratio: 1;
+
+		/* Because we are forcing the image into a square shape, it might look stretched 
+           or squished. 'cover' acts like a zoom lens: it crops the edges of the image 
+           so it fills the square perfectly without looking distorted. */
+		object-fit: cover;
+
+		/* Tells each individual image to stretch across 2 of our 6 grid columns. */
+		grid-column: span 2;
+
+		/* Hardcodes the physical width of the image to 200px. */
+		width: 200px;
+
+		/* Hardcodes the physical height of the image to 200px. */
+		height: 200px;
+
+		/* Because the image is exactly 200px, but it lives in a grid space that might 
+           be slightly larger or smaller, this ensures the image stays perfectly 
+           centered inside its own grid cell. */
+		place-self: center;
+
+		/* Acts like a cookie-cutter. It traces a custom mathematical path (in this case, 
+           a soft, rounded squircle shape) and cuts off any part of the image outside that shape. */
+		clip-path: path('M 40 0 H 160 Q 200 0 200 40 V 160 Q 200 200 160 200 H 40 Q 0 200 0 160 V 40 Q 0 0 40 0 Z');
+		transition:
+			clip-path 500ms,
+			filter 500ms;
+
+		/* 'nth-of-type(4)' targets exactly the 4th image in the HTML. 
+           In our staggered layout, this is the first image on the second row. */
+		&:nth-of-type(4) {
+			/* We command this specific 4th image to start at column line #2, 
+               and then span across 2 columns. This physically pushes the whole second 
+               row to the right, creating the staggered honeycomb look. */
+			grid-column: 2 / span 2;
+		}
+		&:hover {
+			clip-path: path(
+				'M 360 0 H 1440 Q 1800 0 1802.277 -1.503 V 1796.571 Q 1802.277 1796.571 1440 1800 H 0.036 Q 0 1800 0 1440 V 360 Q 0.036 -5.67 0 0 Z'
+			);
+		}
+	}
+}
+
+.gallery:hover > img {
+	filter: brightness(0.5) saturate(0.5);
+}
+
+.gallery > img:hover {
+	filter: brightness(1) saturate(1);
+	scale: 1.3;
+	z-index: 5;
+}
