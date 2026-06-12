@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Premium Modal Component</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<main class="page-content">
+			<h1>Enterprise Dashboard</h1>
+			<p>Manage your account settings and billing preferences.</p>
+			<button id="open-modal-btn" class="btn btn-primary">Upgrade to Pro</button>
+		</main>
+
+		<div id="premium-modal" class="modal-backdrop" aria-hidden="true">
+			<div
+				class="modal-window"
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby="modal-title"
+				aria-describedby="modal-description"
+				tabindex="-1"
+			>
+				<button class="modal-close-btn" aria-label="Close modal" data-modal-close>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						aria-hidden="true"
+					>
+						<line x1="18" y1="6" x2="6" y2="18"></line>
+						<line x1="6" y1="6" x2="18" y2="18"></line>
+					</svg>
+				</button>
+
+				<header class="modal-header">
+					<div class="modal-icon" aria-hidden="true">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+						</svg>
+					</div>
+					<h2 id="modal-title">Upgrade your workspace</h2>
+					<p id="modal-description">
+						Get access to advanced features, unlimited projects, and priority enterprise support.
+					</p>
+				</header>
+
+				<form id="upgrade-form" class="modal-body">
+					<div class="form-group">
+						<label for="workspace-name">Workspace Name</label>
+						<input
+							type="text"
+							id="workspace-name"
+							placeholder="Acme Corp"
+							required
+							autocomplete="organization"
+						/>
+					</div>
+					<div class="form-group">
+						<label for="work-email">Billing Email</label>
+						<input
+							type="email"
+							id="work-email"
+							placeholder="billing@acmecorp.com"
+							required
+							autocomplete="email"
+						/>
+					</div>
+					<div class="form-group">
+						<label for="team-size">Expected Team Size</label>
+						<select id="team-size" required>
+							<option value="" disabled selected>Select size...</option>
+							<option value="1-10">1 - 10 members</option>
+							<option value="11-50">11 - 50 members</option>
+							<option value="50+">50+ members</option>
+						</select>
+					</div>
+				</form>
+
+				<footer class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-modal-close>Cancel</button>
+					<button type="submit" form="upgrade-form" class="btn btn-primary">Confirm Upgrade</button>
+				</footer>
+			</div>
+		</div>
+
+		<script src="modal.js"></script>
+	</body>
+</html>

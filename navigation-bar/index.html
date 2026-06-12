@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Premium SaaS Navigation</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<header class="site-header" id="site-header">
+			<div class="nav-container">
+				<a href="/" class="brand-logo" aria-label="Acme Corp Home">
+					<svg
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						aria-hidden="true"
+					>
+						<polygon points="12 2 2 22 22 22"></polygon>
+					</svg>
+					<span>AcmeCorp</span>
+				</a>
+
+				<nav class="main-nav" id="main-nav" aria-label="Primary Navigation">
+					<ul class="nav-list" role="menubar">
+						<li class="nav-item" role="none">
+							<a href="/about" class="nav-link" role="menuitem">About</a>
+						</li>
+
+						<li class="nav-item has-dropdown" role="none">
+							<button
+								class="nav-link dropdown-trigger"
+								aria-haspopup="true"
+								aria-expanded="false"
+								aria-controls="products-menu"
+							>
+								Products
+								<svg
+									class="chevron"
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									aria-hidden="true"
+								>
+									<polyline points="6 9 12 15 18 9"></polyline>
+								</svg>
+							</button>
+							<div class="dropdown-menu" id="products-menu" role="menu" aria-label="Products">
+								<div class="dropdown-arrow"></div>
+								<ul class="dropdown-list">
+									<li role="none">
+										<a href="/payments" class="dropdown-link" role="menuitem">Payments</a>
+									</li>
+									<li role="none">
+										<a href="/billing" class="dropdown-link" role="menuitem">Billing</a>
+									</li>
+									<li role="none">
+										<a href="/connect" class="dropdown-link" role="menuitem">Connect</a>
+									</li>
+									<li role="none" class="dropdown-divider"></li>
+									<li role="none">
+										<a href="/pricing" class="dropdown-link" role="menuitem">Pricing Overview</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-dropdown" role="none">
+							<button
+								class="nav-link dropdown-trigger"
+								aria-haspopup="true"
+								aria-expanded="false"
+								aria-controls="resources-menu"
+							>
+								Resources
+								<svg
+									class="chevron"
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									aria-hidden="true"
+								>
+									<polyline points="6 9 12 15 18 9"></polyline>
+								</svg>
+							</button>
+							<div class="mega-menu" id="resources-menu" role="menu" aria-label="Resources">
+								<div class="mega-menu-inner">
+									<div class="mega-menu-column">
+										<h3 class="mega-menu-title">Developers</h3>
+										<ul class="dropdown-list">
+											<li role="none">
+												<a href="/docs" class="dropdown-link with-icon" role="menuitem">
+													<svg
+														class="menu-icon"
+														viewBox="0 0 24 24"
+														fill="none"
+														stroke="currentColor"
+														stroke-width="2"
+													>
+														<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+														<path
+															d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+														></path>
+													</svg>
+													<div class="link-content">
+														<span class="link-title">Documentation</span>
+														<span class="link-desc">API references and guides</span>
+													</div>
+												</a>
+											</li>
+											<li role="none">
+												<a href="/api" class="dropdown-link with-icon" role="menuitem">
+													<svg
+														class="menu-icon"
+														viewBox="0 0 24 24"
+														fill="none"
+														stroke="currentColor"
+														stroke-width="2"
+													>
+														<polyline points="16 18 22 12 16 6"></polyline>
+														<polyline points="8 6 2 12 8 18"></polyline>
+													</svg>
+													<div class="link-content">
+														<span class="link-title">API Reference</span>
+														<span class="link-desc">Endpoints and libraries</span>
+													</div>
+												</a>
+											</li>
+										</ul>
+									</div>
+
+									<div class="mega-menu-column">
+										<h3 class="mega-menu-title">Company</h3>
+										<ul class="dropdown-list">
+											<li role="none">
+												<a href="/blog" class="dropdown-link" role="menuitem">Blog</a>
+											</li>
+											<li role="none">
+												<a href="/customers" class="dropdown-link" role="menuitem">Customers</a>
+											</li>
+											<li role="none">
+												<a href="/careers" class="dropdown-link" role="menuitem">Careers</a>
+											</li>
+										</ul>
+									</div>
+
+									<div class="mega-menu-column featured-card">
+										<span class="badge">New</span>
+										<h4 class="featured-title">Global Payments Report</h4>
+										<p class="featured-desc">
+											Discover the latest trends in global digital transactions for 2026.
+										</p>
+										<a href="/report" class="btn btn-secondary btn-sm" role="menuitem"
+											>Read Report</a
+										>
+									</div>
+								</div>
+							</div>
+						</li>
+
+						<li class="nav-item" role="none">
+							<a href="/enterprise" class="nav-link" role="menuitem">Enterprise</a>
+						</li>
+					</ul>
+				</nav>
+
+				<div class="nav-actions">
+					<a href="/login" class="nav-link hide-mobile">Sign in</a>
+					<a href="/contact" class="btn btn-primary">Contact Sales</a>
+
+					<button
+						class="mobile-toggle"
+						aria-expanded="false"
+						aria-controls="main-nav"
+						aria-label="Toggle navigation menu"
+					>
+						<span class="hamburger-line"></span>
+						<span class="hamburger-line"></span>
+						<span class="hamburger-line"></span>
+					</button>
+				</div>
+			</div>
+		</header>
+
+		<main style="height: 200vh; padding: 6rem 2rem">
+			<h1>Building the Future of Commerce.</h1>
+		</main>
+
+		<script src="navigation.js"></script>
+	</body>
+</html>
