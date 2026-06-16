@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>GSAP Setup</title>
+		<link rel="stylesheet" href="./index.css" />
+	</head>
+	<body>
+		<section class="spotlight">
+			<div class="cards">
+				<div class="card">
+					<img src="./img/mental-1.jpg" />
+					<img src="./img/mental-2.jpg" />
+					<img src="./img/mental-3.jpg" />
+					<img src="./img/about-realization.jpg" />
+				</div>
+			</div>
+		</section>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+		<script>
+			const cards = document.querySelectorAll('.card');
+			const spotlight = document.querySelector('.spotlight');
+			const cardsContainer = document.querySelector('.cards');
+
+			const PROXIMITY_RADIUS = 500;
+			const PUSH_FORCE = 10;
+			const TILT_AMOUNT = 0.1;
+			const NEIGHBOR_INFLUENCE = 0.2;
+			const SPRING_STIFFNESS = 0.05;
+			const BOUNCE_FRICTION = 0.85;
+			const CURSOR_SMOOTHING = 0.75;
+
+			const layout = {
+				rotation: [5, -5, 7.5, -10],
+				x: [-275, -100, 100, 275],
+				y: [10, -10, 25, -10],
+			};
+
+			const cursor = { x: 0, y: 0, vx: 0, vy: 0 };
+			let prevCursorX = 0;
+			let prevCursorY = 0;
+
+			const cardPhysics = [...cards].map((el, i) => {
+				gsap.set(el, {
+					x: layout.x[i],
+					y: layout.y[i],
+					rotation: layout.rotation[i],
+					zIndex: i,
+					xPercent: -50,
+					yPercent: -50,
+				});
+
+				return {
+					el,
+					restX: layout.x[i],
+					restY: layout.y[i],
+					restR: layout.rotation[i],
+					x: layout.x[i],
+					y: layout.y[i],
+					z: layout.rotation[i],
+					vx: 0,
+					vy: 0,
+					vz: 0,
+				};
+			});
+		</script>
+	</body>
+</html>
