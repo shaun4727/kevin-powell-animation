@@ -8,12 +8,10 @@
 	<body>
 		<section class="spotlight">
 			<div class="cards">
-				<div class="card">
-					<img src="./img/mental-1.jpg" />
-					<img src="./img/mental-2.jpg" />
-					<img src="./img/mental-3.jpg" />
-					<img src="./img/about-realization.jpg" />
-				</div>
+				<div class="card"><img src="./img/mental-1.jpg" /></div>
+				<div class="card"><img src="./img/mental-2.jpg" /></div>
+				<div class="card"><img src="./img/mental-3.jpg" /></div>
+				<div class="card"><img src="./img/about-realization.jpg" /></div>
 			</div>
 		</section>
 
@@ -59,11 +57,113 @@
 					restR: layout.rotation[i],
 					x: layout.x[i],
 					y: layout.y[i],
-					z: layout.rotation[i],
+					r: layout.rotation[i],
 					vx: 0,
 					vy: 0,
-					vz: 0,
+					vr: 0,
 				};
+			});
+
+			// [00:06:11] 1. Cursor Tracking & Momentum
+			spotlight.addEventListener('mousemove', (e) => {
+				const rawVx = e.clientX - prevCursorX;
+				const rawVy = e.clientY - prevCursorY;
+
+				// Blend with previous velocity using smoothing
+				cursor.vx = cursor.vx * CURSOR_SMOOTHING + rawVx * (1 - CURSOR_SMOOTHING);
+				cursor.vy = cursor.vy * CURSOR_SMOOTHING + rawVy * (1 - CURSOR_SMOOTHING);
+
+				cursor.x = e.clientX;
+				cursor.y = e.clientY;
+				prevCursorX = e.clientX;
+				prevCursorY = e.clientY;
+			});
+
+			spotlight.addEventListener('mouseleave', () => {
+				cursor.vx = 0;
+				cursor.vy = 0;
+			});
+
+			// [00:06:54] 2. Calculate Force Applied to a Specific Card
+			function calculatePushForce(state) {
+				const speed = Math.hypot(cursor.vx, cursor.vy);
+				if (speed < 0.5) return { x: 0, y: 0 };
+
+				const rect = cardsContainer.getBoundingClientRect();
+				const containerCenterX = rect.left + rect.width / 2;
+				const containerCenterY = rect.top + rect.height / 2;
+
+				const cardX = containerCenterX + state.restX;
+				const cardY = containerCenterY + state.restY;
+
+				const dx = cursor.x - cardX;
+				const dy = cursor.y - cardY;
+				const distance = Math.hypot(dx, dy);
+
+				if (distance > PROXIMITY_RADIUS) return { x: 0, y: 0 };
+
+				// Cubic fall-off for weight
+				const normalizedDistance = distance / PROXIMITY_RADIUS;
+				const weight = Math.pow(1 - normalizedDistance, 3);
+
+				return {
+					x: cursor.vx * PUSH_FORCE * weight,
+					y: cursor.vy * PUSH_FORCE * weight,
+				};
+			}
+
+			// [00:07:59] 3. Create Ripple Effect Across Neighbors
+			function applyNeighborInfluence(forces, index) {
+				const totalForce = { x: forces[index].x, y: forces[index].y };
+
+				forces.forEach((force, i) => {
+					if (i !== index) {
+						const distance = Math.abs(i - index);
+						const influence = Math.pow(NEIGHBOR_INFLUENCE, distance);
+
+						totalForce.x += force.x * influence;
+						totalForce.y += force.y * influence * 0.6; // Scale vertical down to 60%
+					}
+				});
+
+				return totalForce;
+			}
+
+			// [00:08:41] 4. Main Animation Loop (Spring Physics)
+			gsap.ticker.add(() => {
+				// Calculate forces for all cards first
+				const forces = cardPhysics.map((state) => calculatePushForce(state));
+
+				cardPhysics.forEach((state, i) => {
+					const totalForce = applyNeighborInfluence(forces, i);
+
+					// Determine the new target properties
+					const targetX = state.restX + totalForce.x;
+					const targetY = state.restY + totalForce.y;
+					const targetR = state.restR + totalForce.x * TILT_AMOUNT;
+
+					// Spring Physics: Add difference to velocity
+					state.vx += (targetX - state.x) * SPRING_STIFFNESS;
+					state.vy += (targetY - state.y) * SPRING_STIFFNESS;
+					state.vr += (targetR - state.r) * SPRING_STIFFNESS;
+
+					// Apply Friction to bleed off energy
+					state.vx *= BOUNCE_FRICTION;
+					state.vy *= BOUNCE_FRICTION;
+					state.vr *= BOUNCE_FRICTION;
+
+					// Update positions based on velocity
+					state.x += state.vx;
+					state.y += state.vy;
+					state.r += state.vr;
+
+					// Apply the updated values via GSAP
+					gsap.set(state.el, {
+						x: state.x,
+						y: state.y,
+						rotation: state.r,
+					});
+				});
 			});
 		</script>
 	</body>
