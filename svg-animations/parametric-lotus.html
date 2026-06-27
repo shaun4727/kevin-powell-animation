@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Parametric Lotus | Premium SVG Animation</title>
+		<style>
+			/* =========================================
+           Design System Variables
+           ========================================= */
+			:root {
+				--bg-color: #050508;
+				--t-breathe-outer: 6s;
+				--t-breathe-mid: 6s;
+				--t-breathe-inner: 3s;
+				--t-spin-global: 45s;
+			}
+
+			/* =========================================
+           Base Layout
+           ========================================= */
+			body,
+			html {
+				margin: 0;
+				padding: 0;
+				width: 100vw;
+				height: 100vh;
+				background-color: var(--bg-color);
+				background: radial-gradient(circle at 50% 50%, #11111a 0%, #050508 100%);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				overflow: hidden;
+				font-family:
+					system-ui,
+					-apple-system,
+					sans-serif;
+			}
+
+			.canvas-container {
+				width: 100%;
+				max-width: 900px;
+				aspect-ratio: 1;
+				position: relative;
+			}
+
+			svg {
+				width: 100%;
+				height: 100%;
+				/* Screen blend mode ensures overlapping colors become bright white/luminous */
+				mix-blend-mode: screen;
+				animation: global-spin var(--t-spin-global) linear infinite;
+			}
+
+			/* =========================================
+           Component Animations
+           ========================================= */
+
+			/* 1. Outer Rings (Cyan) */
+			.anim-out {
+				/* Scales precisely from the center of each individual offset ring */
+				transform-origin: 400px 200px;
+				stroke-dasharray: 40 60;
+				stroke-linecap: round;
+				animation:
+					breathe-out var(--t-breathe-outer) cubic-bezier(0.4, 0, 0.2, 1) infinite alternate,
+					dash-spin 12s linear infinite;
+			}
+
+			/* 2. Middle Rings (Magenta) */
+			.anim-mid {
+				transform-origin: 400px 280px;
+				stroke-dasharray: 20 80;
+				stroke-linecap: round;
+				animation:
+					breathe-mid var(--t-breathe-mid) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate,
+					dash-spin-rev 10s linear infinite;
+			}
+
+			/* 3. Inner Rings (Gold) */
+			.anim-in {
+				transform-origin: 400px 340px;
+				stroke-dasharray: 10 90;
+				stroke-linecap: round;
+				animation:
+					breathe-in var(--t-breathe-inner) ease-in-out infinite alternate,
+					dash-spin 6s linear infinite;
+			}
+
+			/* =========================================
+           Keyframes
+           ========================================= */
+			@keyframes global-spin {
+				0% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(360deg);
+				}
+			}
+
+			@keyframes breathe-out {
+				0% {
+					transform: scale(0.85);
+					opacity: 0.15;
+				}
+				100% {
+					transform: scale(1.15);
+					opacity: 0.8;
+				}
+			}
+
+			@keyframes breathe-mid {
+				0% {
+					transform: scale(0.7);
+					opacity: 0.2;
+				}
+				100% {
+					transform: scale(1.25);
+					opacity: 0.9;
+				}
+			}
+
+			@keyframes breathe-in {
+				0% {
+					transform: scale(0.4);
+					opacity: 0.3;
+				}
+				100% {
+					transform: scale(1.4);
+					opacity: 1;
+				}
+			}
+
+			/* PathLength=100 allows for simple 0 to -100 offset animations */
+			@keyframes dash-spin {
+				to {
+					stroke-dashoffset: -100;
+				}
+			}
+
+			@keyframes dash-spin-rev {
+				to {
+					stroke-dashoffset: 100;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="canvas-container">
+			<!-- Exact 800x800 coordinate space for mathematical precision -->
+			<svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+				<defs>
+					<!-- Premium High-Fidelity Glow Filter -->
+					<filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+						<feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur1" />
+						<feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur2" />
+						<feMerge>
+							<feMergeNode in="blur2" />
+							<feMergeNode in="blur1" />
+							<feMergeNode in="SourceGraphic" />
+						</feMerge>
+					</filter>
+
+					<!-- Core Light Filter -->
+					<filter id="core-glow">
+						<feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur" />
+						<feMerge>
+							<feMergeNode in="blur" />
+							<feMergeNode in="SourceGraphic" />
+						</feMerge>
+					</filter>
+
+					<!-- Global Gradients mapped to the entire SVG space -->
+					<linearGradient id="grad-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+						<stop offset="0%" stop-color="#00f0ff" />
+						<stop offset="100%" stop-color="#0055ff" />
+					</linearGradient>
+
+					<linearGradient id="grad-magenta" x1="100%" y1="0%" x2="0%" y2="100%">
+						<stop offset="0%" stop-color="#ff007a" />
+						<stop offset="100%" stop-color="#7000ff" />
+					</linearGradient>
+
+					<linearGradient id="grad-gold" x1="50%" y1="0%" x2="50%" y2="100%">
+						<stop offset="0%" stop-color="#ffd700" />
+						<stop offset="100%" stop-color="#ff5500" />
+					</linearGradient>
+
+					<!-- Master Components (Instantiated via <use> for extremely clean code) -->
+					<!-- pathLength="100" maps the circumference to exactly 100 units for easy dash animation -->
+					<circle
+						id="c-out"
+						cx="400"
+						cy="200"
+						r="200"
+						pathLength="100"
+						fill="none"
+						stroke="url(#grad-cyan)"
+						stroke-width="1.5"
+					/>
+					<circle
+						id="c-mid"
+						cx="400"
+						cy="280"
+						r="120"
+						pathLength="100"
+						fill="none"
+						stroke="url(#grad-magenta)"
+						stroke-width="2"
+					/>
+					<circle
+						id="c-in"
+						cx="400"
+						cy="340"
+						r="60"
+						pathLength="100"
+						fill="none"
+						stroke="url(#grad-gold)"
+						stroke-width="2.5"
+					/>
+				</defs>
+
+				<!-- ==========================================
+                 LAYER 1: Outer Generative Petals (Cyan)
+                 Offset mathematically by 30 degrees.
+                 Secondary motion created by -0.5s stagger.
+                 ========================================== -->
+				<g filter="url(#neon-glow)">
+					<g transform="rotate(0 400 400)">
+						<use href="#c-out" class="anim-out" style="animation-delay: 0s" />
+					</g>
+					<g transform="rotate(30 400 400)">
+						<use href="#c-out" class="anim-out" style="animation-delay: -0.5s" />
+					</g>
+					<g transform="rotate(60 400 400)">
+						<use href="#c-out" class="anim-out" style="animation-delay: -1s" />
+					</g>
+					<g transform="rotate(90 400 400)">
+						<use href="#c-out" class="anim-out" style="animation-delay: -1.5s" />
+					</g>
+					<g transform="rotate(120 400 400)">
+						<use href="#c-out" class="anim-out" style="animation-delay: -2s" />
+					</g>
+					<g transform="rotate(150 400 400)">
+						<use href="#c-out" class="anim-out" style="animation-delay: -2.5s" />
+					</g>
+					<g transform="rotate(180 400 400)">
+						<use href="#c-out" class="anim-out" style="animation-delay: -3s" />
+					</g>
+					<g transform="rotate(210 400 400)">
+						<use href="#c-out" class="anim-out" style="animation-delay: -3.5s" />
+					</g>
+					<g transform="rotate(240 400 400)">
+						<use href="#c-out" class="anim-out" style="animation-delay: -4s" />
+					</g>
+					<g transform="rotate(270 400 400)">
+						<use href="#c-out" class="anim-out" style="animation-delay: -4.5s" />
+					</g>
+					<g transform="rotate(300 400 400)">
+						<use href="#c-out" class="anim-out" style="animation-delay: -5s" />
+					</g>
+					<g transform="rotate(330 400 400)">
+						<use href="#c-out" class="anim-out" style="animation-delay: -5.5s" />
+					</g>
+				</g>
+
+				<!-- ==========================================
+                 LAYER 2: Middle Interlocking Rings (Magenta)
+                 Base rotated by 15deg to perfectly interlock.
+                 Reverse staggered to create wave counter-flow.
+                 ========================================== -->
+				<g filter="url(#neon-glow)">
+					<g transform="rotate(15 400 400)">
+						<use href="#c-mid" class="anim-mid" style="animation-delay: 0s" />
+					</g>
+					<g transform="rotate(45 400 400)">
+						<use href="#c-mid" class="anim-mid" style="animation-delay: -5.5s" />
+					</g>
+					<g transform="rotate(75 400 400)">
+						<use href="#c-mid" class="anim-mid" style="animation-delay: -5s" />
+					</g>
+					<g transform="rotate(105 400 400)">
+						<use href="#c-mid" class="anim-mid" style="animation-delay: -4.5s" />
+					</g>
+					<g transform="rotate(135 400 400)">
+						<use href="#c-mid" class="anim-mid" style="animation-delay: -4s" />
+					</g>
+					<g transform="rotate(165 400 400)">
+						<use href="#c-mid" class="anim-mid" style="animation-delay: -3.5s" />
+					</g>
+					<g transform="rotate(195 400 400)">
+						<use href="#c-mid" class="anim-mid" style="animation-delay: -3s" />
+					</g>
+					<g transform="rotate(225 400 400)">
+						<use href="#c-mid" class="anim-mid" style="animation-delay: -2.5s" />
+					</g>
+					<g transform="rotate(255 400 400)">
+						<use href="#c-mid" class="anim-mid" style="animation-delay: -2s" />
+					</g>
+					<g transform="rotate(285 400 400)">
+						<use href="#c-mid" class="anim-mid" style="animation-delay: -1.5s" />
+					</g>
+					<g transform="rotate(315 400 400)">
+						<use href="#c-mid" class="anim-mid" style="animation-delay: -1s" />
+					</g>
+					<g transform="rotate(345 400 400)">
+						<use href="#c-mid" class="anim-mid" style="animation-delay: -0.5s" />
+					</g>
+				</g>
+
+				<!-- ==========================================
+                 LAYER 3: Inner Energy Core (Gold)
+                 Fastest stagger for high-energy center.
+                 ========================================== -->
+				<g filter="url(#neon-glow)">
+					<g transform="rotate(0 400 400)">
+						<use href="#c-in" class="anim-in" style="animation-delay: 0s" />
+					</g>
+					<g transform="rotate(30 400 400)">
+						<use href="#c-in" class="anim-in" style="animation-delay: -0.25s" />
+					</g>
+					<g transform="rotate(60 400 400)">
+						<use href="#c-in" class="anim-in" style="animation-delay: -0.5s" />
+					</g>
+					<g transform="rotate(90 400 400)">
+						<use href="#c-in" class="anim-in" style="animation-delay: -0.75s" />
+					</g>
+					<g transform="rotate(120 400 400)">
+						<use href="#c-in" class="anim-in" style="animation-delay: -1s" />
+					</g>
+					<g transform="rotate(150 400 400)">
+						<use href="#c-in" class="anim-in" style="animation-delay: -1.25s" />
+					</g>
+					<g transform="rotate(180 400 400)">
+						<use href="#c-in" class="anim-in" style="animation-delay: -1.5s" />
+					</g>
+					<g transform="rotate(210 400 400)">
+						<use href="#c-in" class="anim-in" style="animation-delay: -1.75s" />
+					</g>
+					<g transform="rotate(240 400 400)">
+						<use href="#c-in" class="anim-in" style="animation-delay: -2s" />
+					</g>
+					<g transform="rotate(270 400 400)">
+						<use href="#c-in" class="anim-in" style="animation-delay: -2.25s" />
+					</g>
+					<g transform="rotate(300 400 400)">
+						<use href="#c-in" class="anim-in" style="animation-delay: -2.5s" />
+					</g>
+					<g transform="rotate(330 400 400)">
+						<use href="#c-in" class="anim-in" style="animation-delay: -2.75s" />
+					</g>
+				</g>
+
+				<!-- ==========================================
+                 LAYER 4: Central Nexus Glow
+                 ========================================== -->
+				<circle cx="400" cy="400" r="18" fill="url(#grad-gold)" filter="url(#core-glow)" opacity="0.9" />
+				<circle cx="400" cy="400" r="6" fill="#ffffff" filter="url(#core-glow)" />
+			</svg>
+		</div>
+	</body>
+</html>

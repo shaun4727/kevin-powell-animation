@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Aurora Resonance | Premium SVG Animation</title>
+		<style>
+			/* =========================================
+           Design System & Variables
+           ========================================= */
+			:root {
+				--bg-color: #02040a;
+				--t-wave-1: 18s;
+				--t-wave-2: 24s;
+				--t-wave-3: 30s;
+				--t-wave-4: 36s;
+				--ease-linear: linear;
+			}
+
+			/* =========================================
+           Base Layout
+           ========================================= */
+			body,
+			html {
+				margin: 0;
+				padding: 0;
+				width: 100vw;
+				height: 100vh;
+				background-color: var(--bg-color);
+				background: radial-gradient(circle at 50% 50%, #0a0f1d 0%, #02040a 100%);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				overflow: hidden;
+				font-family:
+					system-ui,
+					-apple-system,
+					sans-serif;
+			}
+
+			.canvas-container {
+				width: 100%;
+				max-width: 1200px;
+				aspect-ratio: 16 / 9;
+				position: relative;
+			}
+
+			svg {
+				width: 100%;
+				height: 100%;
+				/* Screen blend mode allows the colors to mix beautifully where they overlap */
+				mix-blend-mode: screen;
+			}
+
+			/* =========================================
+           Wave Animations
+           ========================================= */
+			/* Each wave translates exactly half of its 2000px width.
+           Because the bezier curves repeat perfectly at the 1000px mark,
+           when the animation resets to 0%, the visual state is identical,
+           creating a seamless infinite loop. */
+
+			.wave-layer-1 {
+				animation: flow-left var(--t-wave-1) var(--ease-linear) infinite;
+			}
+
+			.wave-layer-2 {
+				animation: flow-left var(--t-wave-2) var(--ease-linear) infinite reverse;
+			}
+
+			.wave-layer-3 {
+				animation: flow-left var(--t-wave-3) var(--ease-linear) infinite;
+			}
+
+			.wave-layer-4 {
+				animation: flow-left var(--t-wave-4) var(--ease-linear) infinite reverse;
+			}
+
+			/* =========================================
+           Ambient Particles
+           ========================================= */
+			.particle {
+				animation: float-up 10s ease-in-out infinite alternate;
+				transform-origin: center;
+			}
+
+			.p-1 {
+				animation-delay: -2s;
+				animation-duration: 12s;
+			}
+			.p-2 {
+				animation-delay: -5s;
+				animation-duration: 15s;
+			}
+			.p-3 {
+				animation-delay: -8s;
+				animation-duration: 18s;
+			}
+			.p-4 {
+				animation-delay: -1s;
+				animation-duration: 20s;
+			}
+			.p-5 {
+				animation-delay: -10s;
+				animation-duration: 14s;
+			}
+
+			/* =========================================
+           Keyframes
+           ========================================= */
+			@keyframes flow-left {
+				0% {
+					transform: translateX(0);
+				}
+				100% {
+					transform: translateX(-1000px);
+				}
+			}
+
+			@keyframes float-up {
+				0% {
+					transform: translateY(30px) scale(0.8);
+					opacity: 0.1;
+				}
+				50% {
+					opacity: 0.8;
+				}
+				100% {
+					transform: translateY(-30px) scale(1.2);
+					opacity: 0.2;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="canvas-container">
+			<!-- ViewBox width is 1000, but the paths are 2000 wide to allow for translation panning -->
+			<svg viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
+				<defs>
+					<!-- High-End Blur Filter for Aura Glow -->
+					<filter id="aura-glow" x="-20%" y="-50%" width="140%" height="200%">
+						<feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur1" />
+						<feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur2" />
+						<feMerge>
+							<feMergeNode in="blur2" />
+							<feMergeNode in="blur1" />
+							<feMergeNode in="SourceGraphic" />
+						</feMerge>
+					</filter>
+
+					<filter id="particle-glow">
+						<feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+						<feMerge>
+							<feMergeNode in="blur" />
+							<feMergeNode in="SourceGraphic" />
+						</feMerge>
+					</filter>
+
+					<!-- Premium Gradients -->
+					<linearGradient id="grad-emerald" x1="0%" y1="0%" x2="100%" y2="0%">
+						<stop offset="0%" stop-color="#43e97b" />
+						<stop offset="100%" stop-color="#38f9d7" />
+					</linearGradient>
+
+					<linearGradient id="grad-sapphire" x1="0%" y1="0%" x2="100%" y2="0%">
+						<stop offset="0%" stop-color="#00f2fe" />
+						<stop offset="100%" stop-color="#4facfe" />
+					</linearGradient>
+
+					<linearGradient id="grad-amethyst" x1="0%" y1="0%" x2="100%" y2="0%">
+						<stop offset="0%" stop-color="#667eea" />
+						<stop offset="100%" stop-color="#764ba2" />
+					</linearGradient>
+
+					<linearGradient id="grad-magenta" x1="0%" y1="0%" x2="100%" y2="0%">
+						<stop offset="0%" stop-color="#fa709a" />
+						<stop offset="100%" stop-color="#fee140" />
+					</linearGradient>
+				</defs>
+
+				<!-- Ambient Background Particles -->
+				<g filter="url(#particle-glow)" fill="#ffffff">
+					<circle cx="200" cy="450" r="1.5" class="particle p-1" opacity="0.5" />
+					<circle cx="450" cy="150" r="2" class="particle p-2" opacity="0.3" />
+					<circle cx="800" cy="500" r="1" class="particle p-3" opacity="0.6" />
+					<circle cx="150" cy="200" r="2.5" class="particle p-4" opacity="0.4" />
+					<circle cx="750" cy="250" r="1.5" class="particle p-5" opacity="0.5" />
+				</g>
+
+				<!-- ==========================================
+                 WAVE LAYER 1 (Amethyst - Deep & Slow)
+                 ========================================== -->
+				<g class="wave-layer-1">
+					<path
+						d="M 0 350 
+                         C 250 150, 750 550, 1000 350 
+                         C 1250 150, 1750 550, 2000 350"
+						fill="none"
+						stroke="url(#grad-amethyst)"
+						stroke-width="3"
+						filter="url(#aura-glow)"
+						opacity="0.8"
+						stroke-linecap="round"
+					/>
+				</g>
+
+				<!-- ==========================================
+                 WAVE LAYER 2 (Sapphire - Inverted Phase)
+                 ========================================== -->
+				<g class="wave-layer-2">
+					<path
+						d="M 0 300 
+                         C 350 600, 650 100, 1000 300 
+                         C 1350 600, 1650 100, 2000 300"
+						fill="none"
+						stroke="url(#grad-sapphire)"
+						stroke-width="2.5"
+						filter="url(#aura-glow)"
+						opacity="0.9"
+					/>
+				</g>
+
+				<!-- ==========================================
+                 WAVE LAYER 3 (Magenta - Taller Amplitude)
+                 ========================================== -->
+				<g class="wave-layer-3">
+					<path
+						d="M 0 250 
+                         C 300 50, 700 450, 1000 250 
+                         C 1300 50, 1700 450, 2000 250"
+						fill="none"
+						stroke="url(#grad-magenta)"
+						stroke-width="1.5"
+						filter="url(#aura-glow)"
+						opacity="0.7"
+					/>
+				</g>
+
+				<!-- ==========================================
+                 WAVE LAYER 4 (Emerald Glow - Core Energy)
+                 ========================================== -->
+				<g class="wave-layer-4">
+					<path
+						d="M 0 400 
+                         C 200 650, 800 150, 1000 400 
+                         C 1200 650, 1800 150, 2000 400"
+						fill="none"
+						stroke="url(#grad-emerald)"
+						stroke-width="4"
+						filter="url(#aura-glow)"
+						opacity="0.8"
+					/>
+				</g>
+			</svg>
+		</div>
+	</body>
+</html>

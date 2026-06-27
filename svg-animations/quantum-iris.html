@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Quantum Iris | Premium SVG Animation</title>
+		<style>
+			/* =========================================
+           Design System & Animation Variables
+           ========================================= */
+			:root {
+				--bg-color: #030509;
+				--core-glow: rgba(112, 0, 255, 0.4);
+
+				/* Timing Architecture */
+				--t-base: 24s;
+				--t-pulse: 6s;
+				--t-draw: 8s;
+
+				/* Easing Profiles */
+				--ease-breathe: cubic-bezier(0.4, 0, 0.2, 1);
+				--ease-organic: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+			}
+
+			/* =========================================
+           Base Layout
+           ========================================= */
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				width: 100vw;
+				height: 100vh;
+				background-color: var(--bg-color);
+				background: radial-gradient(circle at center, #0a0d18 0%, #030509 100%);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				overflow: hidden;
+				font-family:
+					system-ui,
+					-apple-system,
+					sans-serif;
+			}
+
+			/* =========================================
+           SVG Container & Global Motion
+           ========================================= */
+			.canvas-container {
+				width: 100%;
+				max-width: 900px;
+				aspect-ratio: 1;
+				position: relative;
+				/* Subtle breathing of the entire canvas */
+				animation: canvas-breathe calc(var(--t-pulse) * 2) var(--ease-breathe) infinite alternate;
+			}
+
+			svg {
+				width: 100%;
+				height: 100%;
+				display: block;
+				/* Screen blend mode creates the "glowing light" overlapping effect */
+				mix-blend-mode: screen;
+			}
+
+			/* =========================================
+           Component Animations
+           ========================================= */
+
+			/* 1. Slow continuous rotations for orbital groups */
+			.rotate-cw {
+				transform-origin: 400px 400px;
+				animation: spin-cw var(--t-base) linear infinite;
+			}
+
+			.rotate-ccw {
+				transform-origin: 400px 400px;
+				animation: spin-ccw calc(var(--t-base) * 1.5) linear infinite;
+			}
+
+			/* 2. Drawing effects for the sacred geometry layers */
+			.draw-layer-1 {
+				/* Circumference of r=120 is ~754 */
+				stroke-dasharray: 754;
+				stroke-dashoffset: 754;
+				animation: draw-path var(--t-draw) var(--ease-organic) infinite alternate;
+			}
+
+			.draw-layer-2 {
+				stroke-dasharray: 754;
+				stroke-dashoffset: -754; /* Draws in opposite direction */
+				animation: draw-path var(--t-draw) var(--ease-organic) infinite alternate-reverse;
+			}
+
+			/* 3. Core pulsing effect */
+			.core-pulse {
+				transform-origin: 400px 400px;
+				animation: core-scale var(--t-pulse) var(--ease-breathe) infinite alternate;
+			}
+
+			/* 4. Orbital data packets (particles) */
+			.particle-orbit-1 {
+				transform-origin: 400px 400px;
+				animation: spin-cw 8s linear infinite;
+			}
+			.particle-orbit-2 {
+				transform-origin: 400px 400px;
+				animation: spin-ccw 12s linear infinite;
+			}
+
+			/* =========================================
+           Keyframes
+           ========================================= */
+			@keyframes spin-cw {
+				0% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(360deg);
+				}
+			}
+
+			@keyframes spin-ccw {
+				0% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(-360deg);
+				}
+			}
+
+			@keyframes draw-path {
+				0% {
+					stroke-dashoffset: 754;
+					opacity: 0.1;
+				}
+				40% {
+					opacity: 1;
+				}
+				100% {
+					stroke-dashoffset: 0;
+					opacity: 1;
+				}
+			}
+
+			@keyframes core-scale {
+				0% {
+					transform: scale(0.85) rotate(0deg);
+					opacity: 0.7;
+				}
+				100% {
+					transform: scale(1.15) rotate(45deg);
+					opacity: 1;
+				}
+			}
+
+			@keyframes canvas-breathe {
+				0% {
+					transform: scale(0.98);
+					filter: brightness(0.9);
+				}
+				100% {
+					transform: scale(1.02);
+					filter: brightness(1.2);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="canvas-container">
+			<!-- SVG Canvas with carefully crafted geometry -->
+			<svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+				<defs>
+					<!-- Premium Aura Gradients -->
+					<linearGradient id="grad-cyan-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+						<stop offset="0%" stop-color="#00f0ff" />
+						<stop offset="100%" stop-color="#7000ff" />
+					</linearGradient>
+
+					<linearGradient id="grad-pink-purple" x1="100%" y1="0%" x2="0%" y2="100%">
+						<stop offset="0%" stop-color="#ff007a" />
+						<stop offset="100%" stop-color="#7000ff" />
+					</linearGradient>
+
+					<linearGradient id="grad-core" x1="50%" y1="0%" x2="50%" y2="100%">
+						<stop offset="0%" stop-color="#ffffff" />
+						<stop offset="50%" stop-color="#00f0ff" />
+						<stop offset="100%" stop-color="#ff007a" />
+					</linearGradient>
+
+					<!-- High-End Blur Filters for Neon Glow -->
+					<filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+						<feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur1" />
+						<feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur2" />
+						<feGaussianBlur in="SourceGraphic" stdDeviation="24" result="blur3" />
+						<feMerge>
+							<feMergeNode in="blur3" />
+							<feMergeNode in="blur2" />
+							<feMergeNode in="blur1" />
+							<feMergeNode in="SourceGraphic" />
+						</feMerge>
+					</filter>
+
+					<filter id="core-glow" x="-50%" y="-50%" width="200%" height="200%">
+						<feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur" />
+						<feMerge>
+							<feMergeNode in="blur" />
+							<feMergeNode in="SourceGraphic" />
+						</feMerge>
+					</filter>
+				</defs>
+
+				<!-- Base grid/ambient rings (static for contrast) -->
+				<g opacity="0.15" stroke="#ffffff" stroke-width="0.5" fill="none">
+					<circle cx="400" cy="400" r="350" stroke-dasharray="2 6" />
+					<circle cx="400" cy="400" r="300" stroke-dasharray="1 10" />
+					<circle cx="400" cy="400" r="250" />
+				</g>
+
+				<!-- ==========================================
+                 LAYER 1: The Outer Quantum Field
+                 ========================================== -->
+				<g class="rotate-cw">
+					<!-- Precision Outer Ring -->
+					<circle
+						cx="400"
+						cy="400"
+						r="320"
+						fill="none"
+						stroke="url(#grad-cyan-purple)"
+						stroke-width="1.5"
+						stroke-dasharray="100 30 10 30"
+						filter="url(#neon-glow)"
+						opacity="0.6"
+					/>
+
+					<!-- Orbiting Data Node 1 -->
+					<g class="particle-orbit-1">
+						<circle cx="720" cy="400" r="4" fill="#00f0ff" filter="url(#neon-glow)" />
+						<path d="M 720 400 L 760 400" stroke="#00f0ff" stroke-width="1" opacity="0.5" />
+					</g>
+				</g>
+
+				<!-- ==========================================
+                 LAYER 2: Sacred Geometry (Cyan/Purple)
+                 ========================================== -->
+				<g class="rotate-ccw">
+					<g
+						class="draw-layer-1"
+						fill="none"
+						stroke="url(#grad-cyan-purple)"
+						stroke-width="1.5"
+						filter="url(#neon-glow)"
+					>
+						<!-- Seed of Life Pattern -->
+						<circle cx="400" cy="280" r="120" />
+						<circle cx="503.92" cy="340" r="120" />
+						<circle cx="503.92" cy="460" r="120" />
+						<circle cx="400" cy="520" r="120" />
+						<circle cx="296.08" cy="460" r="120" />
+						<circle cx="296.08" cy="340" r="120" />
+						<circle cx="400" cy="400" r="120" />
+					</g>
+				</g>
+
+				<!-- ==========================================
+                 LAYER 3: Sacred Geometry (Pink/Purple, Scaled)
+                 ========================================== -->
+				<g class="rotate-cw">
+					<g transform="translate(400, 400) scale(0.65) rotate(30) translate(-400, -400)">
+						<g
+							class="draw-layer-2"
+							fill="none"
+							stroke="url(#grad-pink-purple)"
+							stroke-width="2"
+							filter="url(#neon-glow)"
+						>
+							<!-- Inner Intersecting Circles -->
+							<circle cx="400" cy="280" r="120" />
+							<circle cx="503.92" cy="340" r="120" />
+							<circle cx="503.92" cy="460" r="120" />
+							<circle cx="400" cy="520" r="120" />
+							<circle cx="296.08" cy="460" r="120" />
+							<circle cx="296.08" cy="340" r="120" />
+							<circle cx="400" cy="400" r="120" />
+						</g>
+					</g>
+
+					<!-- Orbiting Data Node 2 (Inner) -->
+					<g class="particle-orbit-2">
+						<circle cx="580" cy="400" r="3" fill="#ff007a" filter="url(#neon-glow)" />
+					</g>
+				</g>
+
+				<!-- ==========================================
+                 LAYER 4: The Central Neural Core
+                 ========================================== -->
+				<g class="core-pulse">
+					<!-- Outer Core Ring -->
+					<circle
+						cx="400"
+						cy="400"
+						r="50"
+						fill="none"
+						stroke="url(#grad-core)"
+						stroke-width="2"
+						filter="url(#core-glow)"
+						stroke-dasharray="10 5"
+					/>
+
+					<!-- Inner Geometric Star (3 Rotated Squares) -->
+					<g
+						fill="none"
+						stroke="url(#grad-cyan-purple)"
+						stroke-width="1.5"
+						filter="url(#neon-glow)"
+						opacity="0.8"
+					>
+						<rect x="375" y="375" width="50" height="50" rx="4" />
+						<rect x="375" y="375" width="50" height="50" rx="4" transform="rotate(30 400 400)" />
+						<rect x="375" y="375" width="50" height="50" rx="4" transform="rotate(60 400 400)" />
+					</g>
+
+					<!-- Pure Light Nexus -->
+					<circle cx="400" cy="400" r="12" fill="#ffffff" filter="url(#core-glow)" />
+				</g>
+			</svg>
+		</div>
+	</body>
+</html>

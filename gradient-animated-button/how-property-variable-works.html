@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>CSS @property Step-by-Step</title>
+		<style>
+			:root {
+				--bg: #0f172a;
+				--surface: #1e293b;
+				--text: #f8fafc;
+				--accent: #3b82f6;
+				--success: #10b981;
+			}
+
+			body {
+				font-family:
+					system-ui,
+					-apple-system,
+					sans-serif;
+				background-color: var(--bg);
+				color: var(--text);
+				line-height: 1.6;
+				margin: 0;
+				padding: 2rem;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.container {
+				max-width: 800px;
+				width: 100%;
+			}
+
+			.step-card {
+				background-color: var(--surface);
+				border-radius: 12px;
+				padding: 2rem;
+				margin-bottom: 2rem;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+				border-left: 4px solid var(--accent);
+			}
+
+			h2 {
+				margin-top: 0;
+				color: var(--accent);
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.code-block {
+				background: #020617;
+				padding: 1rem;
+				border-radius: 8px;
+				font-family: monospace;
+				color: #38bdf8;
+				overflow-x: auto;
+				white-space: pre;
+			}
+
+			.comment {
+				color: #64748b;
+			}
+			.keyword {
+				color: #f472b6;
+			}
+			.string {
+				color: #a3e635;
+			}
+
+			/* =========================================
+       STEP 2: The Angle Animation (Conic Gradient)
+       ========================================= */
+			@property --gradient-angle {
+				syntax: '<angle>';
+				initial-value: 0deg;
+				inherits: false;
+			}
+
+			.spinning-card {
+				height: 200px;
+				width: 100%;
+				border-radius: 12px;
+				display: grid;
+				place-items: center;
+				font-weight: bold;
+				font-size: 1.2rem;
+				color: white;
+				text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
+				/* We use the variable here! */
+				background: conic-gradient(from var(--gradient-angle), #ef4444, #3b82f6, #10b981, #ef4444);
+
+				/* We animate the variable! */
+				animation: spin 3s linear infinite;
+			}
+
+			@keyframes spin {
+				0% {
+					--gradient-angle: 0deg;
+				}
+				100% {
+					--gradient-angle: 360deg;
+				}
+			}
+
+			/* =========================================
+       STEP 3: The Number Animation
+       ========================================= */
+			@property --count-number {
+				syntax: '<integer>';
+				initial-value: 0;
+				inherits: false;
+			}
+
+			.counter-box {
+				font-size: 4rem;
+				font-weight: bold;
+				color: var(--success);
+				text-align: center;
+				padding: 2rem;
+				background: #020617;
+				border-radius: 12px;
+
+				/* Triggering the animation */
+				animation: count-up 5s ease-out forwards;
+				/* CSS Counters allow us to display numbers! */
+				counter-reset: my-counter var(--count-number);
+			}
+
+			.counter-box::after {
+				content: counter(my-counter) '%';
+			}
+
+			@keyframes count-up {
+				0% {
+					--count-number: 0;
+				}
+				100% {
+					--count-number: 100;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Learn <code>@property</code> in 3 Steps</h1>
+
+			<!-- STEP 1 -->
+			<div class="step-card">
+				<h2>Step 1: The Blueprint (Syntax)</h2>
+				<p>
+					Whenever you want to use <code>@property</code>, you have to write out its "blueprint". You must
+					include all three of these rules, otherwise the browser will ignore it.
+				</p>
+
+				<div class="code-block">
+					<span class="keyword">@property</span> --my-variable {
+					<span class="comment"
+						>/* 1. SYNTAX: What type of data is this? Options: &lt;color&gt;, &lt;angle&gt;, &lt;length&gt;,
+						&lt;percentage&gt;, &lt;integer&gt; */</span
+					>
+					syntax: <span class="string">'&lt;color&gt;'</span>;
+
+					<span class="comment">/* 2. INITIAL VALUE: If nothing else is set, what is the default? */</span>
+					initial-value: <span class="string">transparent</span>;
+
+					<span class="comment"
+						>/* 3. INHERITS: Should child elements inherit this variable? (Usually false for performance)
+						*/</span
+					>
+					inherits: <span class="keyword">false</span>; }
+				</div>
+			</div>
+
+			<!-- STEP 2 -->
+			<div class="step-card">
+				<h2>Step 2: Animating an <code>&lt;angle&gt;</code></h2>
+				<p>
+					Historically, you could never animate a <code>conic-gradient</code> (a circular color wheel). But if
+					we register a variable as an <strong>angle</strong>, we can animate that variable from
+					<code>0deg</code> to <code>360deg</code>, and the gradient will spin!
+				</p>
+
+				<div class="spinning-card">I am spinning using pure CSS!</div>
+				<br />
+				<div class="code-block">
+					<span class="keyword">@property</span> --gradient-angle { syntax:
+					<span class="string">'&lt;angle&gt;'</span>; initial-value: <span class="string">0deg</span>;
+					inherits: <span class="keyword">false</span>; }
+
+					<span class="comment">/* The animation rule */</span>
+					<span class="keyword">@keyframes</span> spin { 0% { --gradient-angle:
+					<span class="string">0deg</span>; } 100% { --gradient-angle: <span class="string">360deg</span>; } }
+				</div>
+			</div>
+
+			<!-- STEP 3 -->
+			<div class="step-card">
+				<h2>Step 3: Animating an <code>&lt;integer&gt;</code></h2>
+				<p>
+					Because the browser knows our variable is a number, we can actually tell CSS to count from 0 to 100
+					over 5 seconds. We don't even need JavaScript!
+				</p>
+
+				<div class="counter-box"></div>
+				<br />
+				<div class="code-block">
+					<span class="keyword">@property</span> --count-number { syntax:
+					<span class="string">'&lt;integer&gt;'</span>; initial-value: <span class="string">0</span>;
+					inherits: <span class="keyword">false</span>; }
+
+					<span class="keyword">@keyframes</span> count-up { 0% { --count-number:
+					<span class="string">0</span>; } 100% { --count-number: <span class="string">100</span>; } }
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

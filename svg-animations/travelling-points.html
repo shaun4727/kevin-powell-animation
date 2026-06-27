@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Traveling Points on Curved Lines</title>
+		<style>
+			/* =========================================
+           Base Layout & Dark Theme
+           ========================================= */
+			body,
+			html {
+				margin: 0;
+				padding: 0;
+				width: 100vw;
+				height: 100vh;
+				background-color: #030509;
+				background: radial-gradient(circle at 50% 50%, #0a0d18 0%, #030509 100%);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				overflow: hidden;
+				font-family:
+					system-ui,
+					-apple-system,
+					sans-serif;
+			}
+
+			.canvas-container {
+				width: 100%;
+				max-width: 1000px;
+				aspect-ratio: 16 / 9;
+				position: relative;
+			}
+
+			svg {
+				width: 100%;
+				height: 100%;
+				/* mix-blend-mode: screen; Removed to keep the solid boxes looking sharp */
+			}
+
+			.glow-point {
+				mix-blend-mode: screen;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="canvas-container">
+			<!-- 1000x600 Coordinate space for the node network -->
+			<svg viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
+				<defs>
+					<!-- Premium Glow Filter for the traveling points -->
+					<filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+						<feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur1" />
+						<feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur2" />
+						<feMerge>
+							<feMergeNode in="blur2" />
+							<feMergeNode in="blur1" />
+							<feMergeNode in="SourceGraphic" />
+						</feMerge>
+					</filter>
+
+					<!-- Box shadow filter for the rectangular nodes -->
+					<filter id="box-shadow" x="-20%" y="-20%" width="140%" height="140%">
+						<feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000000" flood-opacity="0.8" />
+					</filter>
+
+					<!-- Subtle gradients for the curved tracks -->
+					<linearGradient id="grad-track-1" x1="0%" y1="0%" x2="100%" y2="0%">
+						<stop offset="0%" stop-color="#00f0ff" stop-opacity="0.1" />
+						<stop offset="50%" stop-color="#00f0ff" stop-opacity="0.8" />
+						<stop offset="100%" stop-color="#00f0ff" stop-opacity="0.1" />
+					</linearGradient>
+
+					<linearGradient id="grad-track-2" x1="0%" y1="0%" x2="100%" y2="0%">
+						<stop offset="0%" stop-color="#ff007a" stop-opacity="0.1" />
+						<stop offset="50%" stop-color="#ff007a" stop-opacity="0.8" />
+						<stop offset="100%" stop-color="#ff007a" stop-opacity="0.1" />
+					</linearGradient>
+
+					<linearGradient id="grad-track-3" x1="0%" y1="0%" x2="100%" y2="0%">
+						<stop offset="0%" stop-color="#ffd700" stop-opacity="0.1" />
+						<stop offset="50%" stop-color="#ffd700" stop-opacity="0.8" />
+						<stop offset="100%" stop-color="#ffd700" stop-opacity="0.1" />
+					</linearGradient>
+				</defs>
+
+				<!-- ==========================================
+                 The Curved Lines (Connections)
+                 ========================================== -->
+
+				<!-- Connection 1: Node A to Node B -->
+				<path
+					id="conn-1"
+					d="M 260 300 C 340 300, 340 150, 420 150"
+					fill="none"
+					stroke="url(#grad-track-1)"
+					stroke-width="3"
+					stroke-linecap="round"
+				/>
+
+				<!-- Connection 2: Node B to Node C -->
+				<path
+					id="conn-2"
+					d="M 580 150 C 660 150, 660 450, 740 450"
+					fill="none"
+					stroke="url(#grad-track-2)"
+					stroke-width="3"
+					stroke-linecap="round"
+				/>
+
+				<!-- Connection 3: Node A to Node C -->
+				<path
+					id="conn-3"
+					d="M 260 300 C 400 450, 600 450, 740 450"
+					fill="none"
+					stroke="url(#grad-track-3)"
+					stroke-width="3"
+					stroke-linecap="round"
+				/>
+
+				<!-- ==========================================
+                 The 3 Rectangular Boxes (Nodes)
+                 ========================================== -->
+
+				<!-- Box 1 (Left) -->
+				<g filter="url(#box-shadow)">
+					<rect
+						x="100"
+						y="250"
+						width="160"
+						height="100"
+						rx="12"
+						fill="#0f172a"
+						stroke="#00f0ff"
+						stroke-width="2"
+					/>
+					<text x="180" y="295" fill="#ffffff" font-size="18" font-weight="bold" text-anchor="middle">
+						Node A
+					</text>
+					<text x="180" y="320" fill="#94a3b8" font-size="12" text-anchor="middle">Data Source</text>
+				</g>
+
+				<!-- Box 2 (Top Right) -->
+				<g filter="url(#box-shadow)">
+					<rect
+						x="420"
+						y="100"
+						width="160"
+						height="100"
+						rx="12"
+						fill="#0f172a"
+						stroke="#ff007a"
+						stroke-width="2"
+					/>
+					<text x="500" y="145" fill="#ffffff" font-size="18" font-weight="bold" text-anchor="middle">
+						Node B
+					</text>
+					<text x="500" y="170" fill="#94a3b8" font-size="12" text-anchor="middle">Processing API</text>
+				</g>
+
+				<!-- Box 3 (Bottom Right) -->
+				<g filter="url(#box-shadow)">
+					<rect
+						x="740"
+						y="400"
+						width="160"
+						height="100"
+						rx="12"
+						fill="#0f172a"
+						stroke="#ffd700"
+						stroke-width="2"
+					/>
+					<text x="820" y="445" fill="#ffffff" font-size="18" font-weight="bold" text-anchor="middle">
+						Node C
+					</text>
+					<text x="820" y="470" fill="#94a3b8" font-size="12" text-anchor="middle">Database Storage</text>
+				</g>
+
+				<!-- ==========================================
+                 The 3 Traveling Data Points
+                 ========================================== -->
+
+				<!-- Point 1 (Node A -> Node B) -->
+				<circle r="6" fill="#00f0ff" filter="url(#neon-glow)" class="glow-point">
+					<animateMotion dur="3s" repeatCount="indefinite" calcMode="linear">
+						<mpath href="#conn-1" />
+					</animateMotion>
+				</circle>
+
+				<!-- Point 2 (Node B -> Node C) -->
+				<circle r="6" fill="#ff007a" filter="url(#neon-glow)" class="glow-point">
+					<animateMotion dur="3.5s" repeatCount="indefinite" calcMode="linear">
+						<mpath href="#conn-2" />
+					</animateMotion>
+				</circle>
+
+				<!-- Point 3 (Node A -> Node C) -->
+				<circle r="6" fill="#ffd700" filter="url(#neon-glow)" class="glow-point">
+					<animateMotion dur="4.5s" repeatCount="indefinite" calcMode="linear">
+						<mpath href="#conn-3" />
+					</animateMotion>
+				</circle>
+			</svg>
+		</div>
+	</body>
+</html>

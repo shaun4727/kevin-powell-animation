@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Gradient Animated Button & Line</title>
+		<style>
+			/* =========================================
+           CSS Houdini Variables
+           ========================================= */
+			@property --button-fill {
+				syntax: '<color>';
+				inherits: true;
+				initial-value: transparent;
+			}
+
+			@property --button-fill-stop {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 0%;
+			}
+
+			@property --rg-1-x {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 0%;
+			}
+			@property --rg-1-y {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 50%;
+			}
+			@property --rg-2-x {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 20%;
+			}
+			@property --rg-2-y {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 70%;
+			}
+			@property --rg-3-x {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 70%;
+			}
+			@property --rg-3-y {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 20%;
+			}
+			@property --rg-4-x {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 50%;
+			}
+			@property --rg-4-y {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 50%;
+			}
+
+			/* =========================================
+           Global Styles
+           ========================================= */
+			html {
+				font-family: system-ui, sans-serif;
+				color-scheme: dark;
+				font-size: 16px; /* Resetting base size for better component scaling */
+			}
+
+			body {
+				margin: 0;
+				padding: 0;
+				background-color: #000;
+				display: flex;
+				flex-direction: column;
+				min-height: 100vh;
+				color: #fff;
+			}
+
+			.section-title {
+				text-align: center;
+				font-size: 1.5rem;
+				color: #888;
+				margin: 3rem 0 1.5rem;
+				font-weight: 400;
+				letter-spacing: 2px;
+				text-transform: uppercase;
+			}
+
+			/* =========================================
+           The Fixed Gradient Line (Gemini AI Style)
+           ========================================= */
+			.gradient-line {
+				height: 3px;
+				width: 100%;
+				margin: 0;
+				border-radius: 100vw;
+
+				background: linear-gradient(
+					90deg,
+					transparent 0%,
+					rgba(66, 133, 244, 0.8) 20%,
+					/* Google Blue */ rgba(179, 136, 235, 1) 50%,
+					/* Gemini Purple */ rgba(234, 67, 53, 0.8) 80%,
+					/* Soft Red/Pink */ transparent 100%
+				);
+				background-size: 200% 100%;
+				box-shadow: 0 0 12px 1px rgba(179, 136, 235, 0.5);
+				animation: gemini-sweep 2s ease-in-out infinite alternate;
+			}
+
+			@keyframes gemini-sweep {
+				0% {
+					background-position: 100% 0;
+				}
+				100% {
+					background-position: 0% 0;
+				}
+			}
+
+			/* =========================================
+           The Gradient Button (Original)
+           ========================================= */
+			.button-container {
+				display: flex;
+				justify-content: center;
+				gap: 2rem;
+				padding: 2rem;
+			}
+
+			button {
+				font: inherit;
+				cursor: pointer;
+				font-size: 1.25rem;
+			}
+
+			.gradient-button {
+				padding: 0.5lh 4ch;
+				border-radius: 100vw;
+				border: 5px solid transparent;
+				color: white;
+				transition:
+					--button-fill 1s,
+					--button-fill-stop 0.5s;
+				animation: gradient-movement 5s alternate infinite ease-in-out;
+				animation-delay: calc(sibling-index() * -2000ms);
+				background:
+					radial-gradient(circle, var(--button-fill) var(--button-fill-stop), transparent) padding-box,
+					radial-gradient(circle 120px at var(--rg-1-x) var(--rg-1-y), deeppink, transparent) border-box,
+					radial-gradient(circle 150px at var(--rg-2-x) var(--rg-2-y), royalblue, transparent) border-box,
+					radial-gradient(circle 160px at var(--rg-3-x) var(--rg-3-y), rebeccapurple, transparent) border-box,
+					radial-gradient(circle 200px at var(--rg-4-x) var(--rg-4-y), lime, transparent) border-box;
+				background-position:
+					center,
+					center,
+					bottom right,
+					top left,
+					top right,
+					bottom left;
+				background-repeat: no-repeat;
+			}
+
+			.gradient-button:hover,
+			.gradient-button:focus-visible {
+				--button-fill-stop: 100%;
+				--button-fill: var(--button-fill-hover, #222);
+			}
+
+			.gradient-button.bordered {
+				--button-fill-stop: 100%;
+				--button-fill: black;
+			}
+
+			.gradient-button.bordered:is(:hover, :focus-visible) {
+				--button-fill-stop: 0%;
+				--button-fill: transparent;
+			}
+
+			@keyframes gradient-movement {
+				30% {
+					--rg-1-x: 70%;
+					--rg-1-y: 20%;
+				}
+				40% {
+					--rg-2-x: 120%;
+					--rg-2-y: 50%;
+				}
+				45% {
+					--rg-4-x: -10%;
+					--rg-4-y: 10%;
+				}
+				50% {
+					--rg-3-x: 50%;
+					--rg-3-y: 50%;
+				}
+				70% {
+					--rg-1-x: -10%;
+					--rg-2-y: -20%;
+				}
+			}
+
+			/* =========================================
+           Elegant Animated Loaders (6 Types)
+           ========================================= */
+			.loaders-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+				gap: 4rem;
+				padding: 4rem 2rem;
+				max-width: 900px;
+				margin: 0 auto;
+				place-items: center;
+			}
+
+			/* 1. The Breathing Glowing Orb */
+			.loader-orb {
+				width: 3.5rem;
+				height: 3.5rem;
+				border-radius: 50%;
+				background: radial-gradient(circle at 30% 30%, rgba(179, 136, 235, 1), rgba(66, 133, 244, 1));
+				animation: orb-breathe 2s ease-in-out infinite alternate;
+			}
+
+			@keyframes orb-breathe {
+				0% {
+					transform: scale(0.85);
+					box-shadow: 0 0 15px 2px rgba(179, 136, 235, 0.2);
+				}
+				100% {
+					transform: scale(1.1);
+					box-shadow: 0 0 40px 15px rgba(66, 133, 244, 0.6);
+				}
+			}
+
+			/* 2. The Sleek Conic Spinner */
+			.loader-spinner {
+				width: 4rem;
+				height: 4rem;
+				border-radius: 50%;
+				background: conic-gradient(
+					from 0deg,
+					transparent 0%,
+					rgba(234, 67, 53, 0.1) 40%,
+					rgba(234, 67, 53, 1) 100%
+				);
+				-webkit-mask: radial-gradient(transparent 55%, black 56%);
+				mask: radial-gradient(transparent 55%, black 56%);
+				animation: spin-fast 1s linear infinite;
+			}
+
+			@keyframes spin-fast {
+				0% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(360deg);
+				}
+			}
+
+			/* 3. The Staggered Bouncing Dots */
+			.loader-dots {
+				display: flex;
+				gap: 0.5rem;
+			}
+
+			.loader-dots span {
+				width: 1rem;
+				height: 1rem;
+				border-radius: 50%;
+				background-color: #fff;
+				animation: dots-bounce 1.4s infinite ease-in-out both;
+			}
+
+			.loader-dots span:nth-child(1) {
+				animation-delay: -0.32s;
+				background-color: rgba(66, 133, 244, 1);
+			}
+			.loader-dots span:nth-child(2) {
+				animation-delay: -0.16s;
+				background-color: rgba(179, 136, 235, 1);
+			}
+			.loader-dots span:nth-child(3) {
+				background-color: rgba(234, 67, 53, 1);
+			}
+
+			@keyframes dots-bounce {
+				0%,
+				80%,
+				100% {
+					transform: scale(0);
+				}
+				40% {
+					transform: scale(1);
+				}
+			}
+
+			/* 4. Pulsing Audio Wave */
+			.loader-wave {
+				display: flex;
+				align-items: center;
+				gap: 5px;
+				height: 3rem;
+			}
+
+			.loader-wave span {
+				width: 6px;
+				height: 100%;
+				background: linear-gradient(180deg, rgba(66, 133, 244, 1), rgba(179, 136, 235, 1));
+				border-radius: 6px;
+				animation: wave-pulse 1s ease-in-out infinite;
+			}
+
+			.loader-wave span:nth-child(1) {
+				animation-delay: -0.4s;
+			}
+			.loader-wave span:nth-child(2) {
+				animation-delay: -0.2s;
+			}
+			.loader-wave span:nth-child(3) {
+				animation-delay: 0s;
+			}
+			.loader-wave span:nth-child(4) {
+				animation-delay: -0.2s;
+			}
+			.loader-wave span:nth-child(5) {
+				animation-delay: -0.4s;
+			}
+
+			@keyframes wave-pulse {
+				0%,
+				100% {
+					transform: scaleY(0.3);
+					opacity: 0.5;
+				}
+				50% {
+					transform: scaleY(1);
+					opacity: 1;
+				}
+			}
+
+			/* 5. Elegant Ripple */
+			.loader-ripple {
+				position: relative;
+				width: 4rem;
+				height: 4rem;
+			}
+
+			.loader-ripple span {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				border: 2px solid rgba(179, 136, 235, 1);
+				border-radius: 50%;
+				opacity: 0;
+				animation: ripple-expand 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+			}
+
+			.loader-ripple span:nth-child(2) {
+				animation-delay: -1s;
+			}
+
+			@keyframes ripple-expand {
+				0% {
+					transform: scale(0);
+					opacity: 1;
+				}
+				100% {
+					transform: scale(1.5);
+					opacity: 0;
+				}
+			}
+
+			/* 6. Dual Orbiting Rings */
+			.loader-orbit {
+				position: relative;
+				width: 4rem;
+				height: 4rem;
+			}
+
+			.loader-orbit::before,
+			.loader-orbit::after {
+				content: '';
+				position: absolute;
+				border-radius: 50%;
+			}
+
+			.loader-orbit::before {
+				inset: 0;
+				border: 3px solid transparent;
+				border-top-color: rgba(234, 67, 53, 1);
+				border-bottom-color: rgba(66, 133, 244, 1);
+				animation: spin-fast 1.5s linear infinite;
+			}
+
+			.loader-orbit::after {
+				inset: 10px;
+				border: 3px solid transparent;
+				border-left-color: rgba(179, 136, 235, 1);
+				border-right-color: rgba(179, 136, 235, 1);
+				animation: spin-fast 1s linear infinite reverse;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- The animated glowing line -->
+		<div class="gradient-line"></div>
+
+		<h2 class="section-title">Interactive Buttons</h2>
+		<div class="button-container">
+			<button class="gradient-button bordered">Login</button>
+			<button class="gradient-button">Sign up</button>
+		</div>
+
+		<h2 class="section-title">Premium Loaders</h2>
+		<!-- Swapped to grid for better 6-item layout -->
+		<div class="loaders-grid">
+			<!-- 1. Glowing Orb -->
+			<div class="loader-orb"></div>
+
+			<!-- 2. Conic Spinner -->
+			<div class="loader-spinner"></div>
+
+			<!-- 3. Staggered Dots -->
+			<div class="loader-dots">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+
+			<!-- 4. Audio Wave -->
+			<div class="loader-wave">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+
+			<!-- 5. Elegant Ripple -->
+			<div class="loader-ripple">
+				<span></span>
+				<span></span>
+			</div>
+
+			<!-- 6. Dual Orbiting Rings -->
+			<div class="loader-orbit"></div>
+		</div>
+	</body>
+</html>

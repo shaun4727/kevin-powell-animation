@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>The Zenith Prism | Premium SVG Animation</title>
+		<style>
+			/* =========================================
+           Design System & Timing Variables
+           ========================================= */
+			:root {
+				--bg-color: #030105;
+
+				/* Rotation Speeds */
+				--t-spin-base: 60s;
+
+				/* Drawing Speeds */
+				--t-draw-fast: 4s;
+				--t-draw-med: 8s;
+				--t-draw-slow: 12s;
+
+				/* Breathing Speeds */
+				--t-breathe: 6s;
+			}
+
+			/* =========================================
+           Base Layout
+           ========================================= */
+			body,
+			html {
+				margin: 0;
+				padding: 0;
+				width: 100vw;
+				height: 100vh;
+				background-color: var(--bg-color);
+				background: radial-gradient(circle at 50% 50%, #0a0410 0%, #030105 100%);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				overflow: hidden;
+				font-family:
+					system-ui,
+					-apple-system,
+					sans-serif;
+			}
+
+			.canvas-container {
+				width: 100%;
+				max-width: 1000px;
+				aspect-ratio: 1;
+				position: relative;
+				/* Global pulsing of the entire prism */
+				animation: global-breathe var(--t-breathe) cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+			}
+
+			svg {
+				width: 100%;
+				height: 100%;
+				mix-blend-mode: screen; /* Creates pure white energy where colors overlap */
+			}
+
+			/* =========================================
+           Component Animations
+           ========================================= */
+
+			/* 1. Rotational Groupings */
+			.group-cw {
+				transform-origin: 500px 500px;
+				animation: spin-cw var(--t-spin-base) linear infinite;
+			}
+
+			.group-ccw {
+				transform-origin: 500px 500px;
+				/* 30 degree initial offset to form the 12-pointed star, plus counter-rotation */
+				animation: spin-ccw-offset calc(var(--t-spin-base) * 1.2) linear infinite;
+			}
+
+			.group-inner {
+				transform-origin: 500px 500px;
+				animation: spin-cw calc(var(--t-spin-base) * 0.5) cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite
+					alternate;
+			}
+
+			/* 2. Drawing Stroke Animations */
+			/* Outer Layer */
+			.draw-out {
+				stroke-dasharray: 30 70;
+				stroke-linecap: round;
+				animation: draw-forward var(--t-draw-slow) linear infinite;
+			}
+
+			.draw-out-rev {
+				stroke-dasharray: 30 70;
+				stroke-linecap: round;
+				animation: draw-reverse var(--t-draw-slow) linear infinite;
+			}
+
+			/* Middle Layer */
+			.draw-mid {
+				stroke-dasharray: 50 50;
+				stroke-linecap: round;
+				animation: draw-forward var(--t-draw-med) linear infinite;
+			}
+
+			.draw-mid-rev {
+				stroke-dasharray: 50 50;
+				stroke-linecap: round;
+				animation: draw-reverse var(--t-draw-med) linear infinite;
+			}
+
+			/* Inner Layer */
+			.draw-in {
+				stroke-dasharray: 15 85;
+				stroke-linecap: round;
+				animation: draw-forward var(--t-draw-fast) linear infinite;
+			}
+
+			/* 3. Glowing Energy Nodes */
+			.node-pulse {
+				transform-origin: center;
+				animation: node-flash 2s ease-in-out infinite alternate;
+			}
+
+			.node-delay-1 {
+				animation-delay: -0.5s;
+			}
+			.node-delay-2 {
+				animation-delay: -1s;
+			}
+			.node-delay-3 {
+				animation-delay: -1.5s;
+			}
+
+			/* =========================================
+           Keyframes
+           ========================================= */
+			@keyframes spin-cw {
+				from {
+					transform: rotate(0deg);
+				}
+				to {
+					transform: rotate(360deg);
+				}
+			}
+
+			@keyframes spin-ccw-offset {
+				from {
+					transform: rotate(30deg);
+				}
+				to {
+					transform: rotate(-330deg);
+				}
+			}
+
+			/* pathLength="100" maps the polygon's perimeter to 100 units */
+			@keyframes draw-forward {
+				from {
+					stroke-dashoffset: 100;
+				}
+				to {
+					stroke-dashoffset: 0;
+				}
+			}
+
+			@keyframes draw-reverse {
+				from {
+					stroke-dashoffset: -100;
+				}
+				to {
+					stroke-dashoffset: 0;
+				}
+			}
+
+			@keyframes global-breathe {
+				0% {
+					transform: scale(0.96);
+					filter: brightness(0.8);
+				}
+				100% {
+					transform: scale(1.04);
+					filter: brightness(1.2);
+				}
+			}
+
+			@keyframes node-flash {
+				0% {
+					transform: scale(0.5);
+					opacity: 0.3;
+				}
+				100% {
+					transform: scale(1.5);
+					opacity: 1;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="canvas-container">
+			<!-- 1000x1000 Master Grid for precision geometry -->
+			<svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+				<defs>
+					<!-- Premium Multi-Layered Blur Filters -->
+					<filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+						<feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur1" />
+						<feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur2" />
+						<feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur3" />
+						<feMerge>
+							<feMergeNode in="blur3" />
+							<feMergeNode in="blur2" />
+							<feMergeNode in="blur1" />
+							<feMergeNode in="SourceGraphic" />
+						</feMerge>
+					</filter>
+
+					<filter id="gold-glow" x="-50%" y="-50%" width="200%" height="200%">
+						<feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur1" />
+						<feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur2" />
+						<feMerge>
+							<feMergeNode in="blur2" />
+							<feMergeNode in="blur1" />
+							<feMergeNode in="SourceGraphic" />
+						</feMerge>
+					</filter>
+
+					<!-- Holographic Gradients -->
+					<linearGradient id="grad-cyan-magenta" x1="0%" y1="0%" x2="100%" y2="100%">
+						<stop offset="0%" stop-color="#00f0ff" />
+						<stop offset="100%" stop-color="#ff007a" />
+					</linearGradient>
+
+					<linearGradient id="grad-gold-magenta" x1="100%" y1="0%" x2="0%" y2="100%">
+						<stop offset="0%" stop-color="#ffd700" />
+						<stop offset="100%" stop-color="#ff007a" />
+					</linearGradient>
+
+					<linearGradient id="grad-pure-cyan" x1="50%" y1="0%" x2="50%" y2="100%">
+						<stop offset="0%" stop-color="#ffffff" />
+						<stop offset="100%" stop-color="#00f0ff" />
+					</linearGradient>
+
+					<!-- 
+                    Master Triangle Geometry 
+                    Radius = 350. Center = (500,500).
+                    Points mathematically derived:
+                    Top: (500, 150)
+                    Bottom Right: 500 + (350 * cos(30)) = 500 + 303.1 = 803.1
+                                  500 + (350 * sin(30)) = 500 + 175 = 675
+                    Bottom Left:  500 - 303.1 = 196.9, 675
+                -->
+					<!-- Equilateral Triangle scaled via pathLength for flawless dashed animations -->
+					<polygon id="sacred-tri" points="500,150 803.1,675 196.9,675" pathLength="100" fill="none" />
+
+					<!-- Base Structure (Faint background lines) -->
+					<polygon
+						id="base-tri"
+						points="500,150 803.1,675 196.9,675"
+						fill="none"
+						stroke="rgba(255, 255, 255, 0.05)"
+						stroke-width="1.5"
+					/>
+				</defs>
+
+				<!-- ==========================================
+                 LAYER 1: Clockwise Hexagram (Cyan/Magenta)
+                 ========================================== -->
+				<g class="group-cw" filter="url(#neon-glow)">
+					<!-- Faint Structural Base -->
+					<use href="#base-tri" />
+					<use href="#base-tri" style="transform: rotate(180deg); transform-origin: 500px 500px" />
+
+					<!-- Outer Animated Strokes -->
+					<use href="#sacred-tri" class="draw-out" stroke="url(#grad-cyan-magenta)" stroke-width="2.5" />
+					<use
+						href="#sacred-tri"
+						class="draw-out-rev"
+						stroke="url(#grad-cyan-magenta)"
+						stroke-width="2.5"
+						style="transform: rotate(180deg); transform-origin: 500px 500px"
+					/>
+
+					<!-- Middle Scaled Layer (Rotates opposite direction naturally by stroke path) -->
+					<g style="transform: scale(0.65); transform-origin: 500px 500px">
+						<use href="#base-tri" />
+						<use href="#base-tri" style="transform: rotate(180deg); transform-origin: 500px 500px" />
+						<use href="#sacred-tri" class="draw-mid" stroke="url(#grad-cyan-magenta)" stroke-width="3" />
+						<use
+							href="#sacred-tri"
+							class="draw-mid-rev"
+							stroke="url(#grad-cyan-magenta)"
+							stroke-width="3"
+							style="transform: rotate(180deg); transform-origin: 500px 500px"
+						/>
+					</g>
+				</g>
+
+				<!-- ==========================================
+                 LAYER 2: Counter-Clockwise Hexagram (Gold/Magenta)
+                 Offset by 30 degrees to create a 12-pointed star
+                 ========================================== -->
+				<g class="group-ccw" filter="url(#gold-glow)">
+					<!-- Faint Structural Base -->
+					<use href="#base-tri" />
+					<use href="#base-tri" style="transform: rotate(180deg); transform-origin: 500px 500px" />
+
+					<!-- Outer Animated Strokes -->
+					<use href="#sacred-tri" class="draw-out" stroke="url(#grad-gold-magenta)" stroke-width="2" />
+					<use
+						href="#sacred-tri"
+						class="draw-out-rev"
+						stroke="url(#grad-gold-magenta)"
+						stroke-width="2"
+						style="transform: rotate(180deg); transform-origin: 500px 500px"
+					/>
+
+					<!-- Middle Scaled Layer -->
+					<g style="transform: scale(0.65); transform-origin: 500px 500px">
+						<use href="#base-tri" />
+						<use href="#base-tri" style="transform: rotate(180deg); transform-origin: 500px 500px" />
+						<use
+							href="#sacred-tri"
+							class="draw-mid-rev"
+							stroke="url(#grad-gold-magenta)"
+							stroke-width="4"
+						/>
+						<use
+							href="#sacred-tri"
+							class="draw-mid"
+							stroke="url(#grad-gold-magenta)"
+							stroke-width="4"
+							style="transform: rotate(180deg); transform-origin: 500px 500px"
+						/>
+					</g>
+				</g>
+
+				<!-- ==========================================
+                 LAYER 3: The Deep Inner Core (Hyper Cyan)
+                 Scales inward drastically to create infinite depth
+                 ========================================== -->
+				<g class="group-inner" filter="url(#neon-glow)">
+					<g style="transform: scale(0.3); transform-origin: 500px 500px">
+						<use href="#sacred-tri" class="draw-in" stroke="url(#grad-pure-cyan)" stroke-width="5" />
+						<use
+							href="#sacred-tri"
+							class="draw-in"
+							stroke="url(#grad-pure-cyan)"
+							stroke-width="5"
+							style="transform: rotate(180deg); transform-origin: 500px 500px"
+						/>
+					</g>
+				</g>
+
+				<!-- ==========================================
+                 LAYER 4: Pulsing Neural Nodes (Vertices)
+                 ========================================== -->
+				<!-- Group CW Nodes -->
+				<g class="group-cw" filter="url(#neon-glow)" fill="#ffffff">
+					<!-- Top Triangle Vertices -->
+					<circle cx="500" cy="150" r="4" class="node-pulse" />
+					<circle cx="803.1" cy="675" r="4" class="node-pulse node-delay-1" />
+					<circle cx="196.9" cy="675" r="4" class="node-pulse node-delay-2" />
+					<!-- Inverted Triangle Vertices -->
+					<circle cx="500" cy="850" r="4" class="node-pulse node-delay-1" />
+					<circle cx="196.9" cy="325" r="4" class="node-pulse node-delay-2" />
+					<circle cx="803.1" cy="325" r="4" class="node-pulse" />
+				</g>
+
+				<!-- Group CCW Nodes -->
+				<g class="group-ccw" filter="url(#gold-glow)" fill="#ffffff">
+					<!-- Top Triangle Vertices -->
+					<circle cx="500" cy="150" r="3" class="node-pulse node-delay-3" />
+					<circle cx="803.1" cy="675" r="3" class="node-pulse" />
+					<circle cx="196.9" cy="675" r="3" class="node-pulse node-delay-1" />
+					<!-- Inverted Triangle Vertices -->
+					<circle cx="500" cy="850" r="3" class="node-pulse node-delay-2" />
+					<circle cx="196.9" cy="325" r="3" class="node-pulse node-delay-3" />
+					<circle cx="803.1" cy="325" r="3" class="node-pulse node-delay-1" />
+				</g>
+
+				<!-- ==========================================
+                 LAYER 5: Central Singularity Point
+                 ========================================== -->
+				<circle
+					cx="500"
+					cy="500"
+					r="8"
+					fill="#ffffff"
+					filter="url(#neon-glow)"
+					class="node-pulse"
+					style="animation-duration: 3s"
+				/>
+				<circle cx="500" cy="500" r="3" fill="#ffffff" filter="url(#gold-glow)" />
+			</svg>
+		</div>
+	</body>
+</html>
