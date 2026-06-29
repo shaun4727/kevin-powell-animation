@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Practice css</title>
+		<style>
+			@property --button-fill {
+				syntax: '<color>';
+				inherits: true;
+				initial-value: transparent;
+			}
+
+			@property --button-fill-stop {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 0%;
+			}
+
+			@property --rg-1-x {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 0%;
+			}
+			@property --rg-1-y {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 50%;
+			}
+			@property --rg-2-x {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 20%;
+			}
+			@property --rg-2-y {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 70%;
+			}
+			@property --rg-3-x {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 70%;
+			}
+			@property --rg-3-y {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 20%;
+			}
+			@property --rg-4-x {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 50%;
+			}
+			@property --rg-4-y {
+				syntax: '<percentage>';
+				inherits: true;
+				initial-value: 50%;
+			}
+			html {
+				font-family: system-ui, sans-serif;
+				color-scheme: dark;
+				font-size: 16px;
+			}
+			body {
+				margin: 0;
+				background: #000;
+				width: 100vw;
+			}
+			.gradient-line {
+				height: 3px;
+				width: 100%;
+				margin: 0;
+				border-radius: 100vw;
+
+				background: linear-gradient(
+					90deg,
+					transparent 0%,
+					rgba(66, 133, 244, 0.8) 20%,
+					/* Google Blue */ rgba(179, 136, 235, 1) 50%,
+					/* Gemini Purple */ rgba(234, 67, 53, 0.8) 80%,
+					/* Soft Red/Pink */ transparent 100%
+				);
+				background-size: 200% 100%;
+				box-shadow: 0 0 12px 1px rgba(179, 136, 235, 0.5);
+				animation: gemini-sweep 2s ease-in-out infinite alternate;
+			}
+
+			@keyframes gemini-sweep {
+				0% {
+					background-position: 100% 0;
+				}
+				100% {
+					background-position: 0% 0;
+				}
+			}
+			/* button styles */
+
+			h2 {
+				margin-top: 50px;
+				text-align: center;
+			}
+			.container {
+				width: 100vw;
+				display: grid;
+				place-items: center;
+			}
+			.gradient-button {
+				padding: 0.5lh 5ch;
+				border-radius: 100vw;
+				border: 5px solid transparent;
+				font-size: 2rem;
+				background:
+					radial-gradient(circle, var(--button-fill) var(--button-fill-stop), transparent) padding-box,
+					radial-gradient(circle 120px at var(--rg-1-x) var(--rg-1-y), deeppink, transparent) border-box,
+					radial-gradient(circle 150px at var(--rg-2-x) var(--rg-2-y), rebeccapurple) border-box,
+					radial-gradient(circle 160px at var(--rg-3-x) var(--rg-3-y), royalblue) border-box,
+					radial-gradient(circle 200px at var(--rg-4-x) var(--rg-4-y), lime) border-box;
+				animation: moving-animation 5s ease-in-out infinite alternate;
+				animation-delay: calc(sibling-index() * -2000ms);
+			}
+
+			@keyframes moving-animation {
+				30% {
+					--rg-1-x: 70%;
+					--rg-1-y: 20%;
+				}
+				40% {
+					--rg-2-x: 120%;
+					--rg-2-y: 50%;
+				}
+				45% {
+					--rg-4-x: -10%;
+					--rg-4-y: 10%;
+				}
+				50% {
+					--rg-3-x: 50%;
+					--rg-3-y: 50%;
+				}
+				70% {
+					--rg-1-x: -10%;
+					--rg-2-y: -20%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="gradient-line"></div>
+		<h2>Interactive Button</h2>
+		<div class="container">
+			<button class="gradient-button">Login</button>
+		</div>
+	</body>
+</html>

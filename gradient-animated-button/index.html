@@ -147,6 +147,7 @@
 					--button-fill-stop 0.5s;
 				animation: gradient-movement 5s alternate infinite ease-in-out;
 				animation-delay: calc(sibling-index() * -2000ms);
+				/* ১২০px সাইজের একটি গোলাপি আলোর বল তৈরি করে বর্ডার এরিয়ায় সেট করছে, যার পজিশন ভেরিয়েবলের মাধ্যমে এনিমেশন পাবে */
 				background:
 					radial-gradient(circle, var(--button-fill) var(--button-fill-stop), transparent) padding-box,
 					radial-gradient(circle 120px at var(--rg-1-x) var(--rg-1-y), deeppink, transparent) border-box,
