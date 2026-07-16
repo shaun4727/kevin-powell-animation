@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Tree Menu</title>
+		<link rel="stylesheet" href="./index.css" />
+	</head>
+	<body>
+		<div class="tree-menu">
+			<!-- Level 1: Standard Link -->
+			<a href="#" class="tree-link">Dashboard</a>
+
+			<!-- Level 1: Dropdown -->
+			<details>
+				<summary>E-Commerce</summary>
+				<div class="details-content">
+					<a href="#" class="tree-link">Products</a>
+					<a href="#" class="tree-link">Orders</a>
+					<a href="#" class="tree-link">Customers</a>
+				</div>
+			</details>
+
+			<!-- Level 1: Multi-layered Dropdown -->
+			<details>
+				<summary>Settings</summary>
+				<div class="details-content">
+					<a href="#" class="tree-link">Profile</a>
+
+					<!-- Level 2: Nested Dropdown -->
+					<details>
+						<summary>Security</summary>
+						<div class="details-content">
+							<a href="#" class="tree-link">Passwords</a>
+							<a href="#" class="tree-link">Two-Factor Auth</a>
+
+							<!-- Level 3: Deeply Nested Dropdown -->
+							<details>
+								<summary>Active Sessions</summary>
+								<div class="details-content">
+									<a href="#" class="tree-link">Desktop Devices</a>
+									<a href="#" class="tree-link">Mobile Devices</a>
+								</div>
+							</details>
+						</div>
+					</details>
+				</div>
+			</details>
+		</div>
+	</body>
+</html>

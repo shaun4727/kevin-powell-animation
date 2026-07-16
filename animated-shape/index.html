@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>CSS Blob Shapes</title>
+		<style>
+			/* Basic reset and layout styling to center the card */
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+				font-family:
+					system-ui,
+					-apple-system,
+					sans-serif;
+			}
+
+			body {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				min-height: 100vh;
+				background-color: #e2e8f0;
+			}
+
+			/* The "profiley card thing" container mentioned in the video */
+			.card {
+				background-color: #ffffff;
+				padding: 3rem;
+				border-radius: 1rem;
+				box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+				text-align: center;
+				max-width: 350px;
+				width: 100%;
+			}
+
+			.card h2 {
+				margin-top: 1.5rem;
+				color: #1e293b;
+				font-size: 1.5rem;
+			}
+
+			.card p {
+				color: #64748b;
+				margin-top: 0.5rem;
+			}
+
+			/* * The core concept from the video: 
+         * Using the 8-value border-radius syntax to create a blob.
+         * The values before the slash dictate the horizontal radius, 
+         * and the values after the slash dictate the vertical radius.
+         */
+			.profile-image {
+				width: 200px;
+				height: 200px;
+				object-fit: cover;
+
+				/* Initial Blob Shape generated from a fancy border-radius tool */
+				border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+
+				/* Smoothly animate the border-radius as done in the video */
+				transition: border-radius 500ms ease-in-out;
+
+				box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+			}
+
+			/* * The hover state demonstrated to animate between two shapes 
+         * Note: As Kevin mentions, animating border-radius isn't always the 
+         * most performant, but it's great for fun decorative elements!
+         */
+			.profile-image:hover {
+				/* A new, contrasting blob shape to morph into */
+				border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="card">
+			<!-- Using a placeholder image for the profile -->
+			<img
+				src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+				alt="Profile"
+				class="profile-image"
+			/>
+			<h2>Kevin Powell</h2>
+			<p>CSS Evangelist</p>
+		</div>
+	</body>
+</html>

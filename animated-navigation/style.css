@@ -1,0 +1,163 @@
+:root {
+	--color-primary-400: hsl(207, 88%, 51%);
+	--color-neutral-100: #ffffff;
+	--color-neutral-900: #000000;
+
+	--font-size-400: 1.125rem;
+	--font-size-600: 1.75rem;
+	--font-size-700: 3.5rem;
+
+	--space-4: 1rem;
+	--space-8: 4rem;
+
+	--body-padding: var(--space-8);
+}
+
+/* Boilerplate Reset */
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: system-ui, sans-serif;
+	font-size: var(--font-size-400);
+	padding: var(--body-padding);
+}
+
+/* Utility Layout Classes */
+.flex-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/* The Core Magic: Grid Stacking */
+.stack {
+	display: grid;
+	grid-template-areas: 'stack';
+	height: calc(100vh - (var(--body-padding) * 2));
+}
+
+.stack > * {
+	grid-area: stack;
+}
+
+header {
+	align-self: start;
+	z-index: 100;
+}
+
+footer {
+	align-self: end;
+	z-index: 100;
+}
+
+/* Background Video Sizing */
+.video-bg {
+	z-index: -3;
+	width: 100%;
+	height: 100%;
+}
+
+.video-bg video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* Layout Grids */
+.content-grid,
+.nav-grid {
+	display: grid;
+	grid-template-columns: 70% 30%;
+	align-content: center;
+	gap: var(--space-4);
+}
+
+/* Typography Overrides */
+h1 {
+	font-size: var(--font-size-700);
+	font-weight: 700;
+}
+
+.nav-list {
+	list-style: none;
+	font-weight: 700;
+	font-size: var(--font-size-600);
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.button {
+	display: inline-block;
+	padding: 1rem 2rem;
+	background: var(--color-neutral-900);
+	color: var(--color-neutral-100);
+	text-decoration: none;
+	margin-top: 1rem;
+}
+
+/* -------------------------------------------
+   Animation & Blend Modes (The Dribbble Trick)
+-------------------------------------------- */
+
+/* Blue Color Multiplied over Video */
+.content-grid-bg {
+	background: var(--color-primary-400);
+	mix-blend-mode: multiply;
+	z-index: -1;
+}
+
+/* Solid White Overlay for Navigation */
+.nav-grid-bg {
+	background: var(--color-neutral-100);
+	color: var(--color-neutral-900);
+	z-index: -1;
+}
+
+.content-grid-bg,
+.nav-grid-bg {
+	position: absolute;
+	inset: 0;
+	transition: clip-path 500ms ease-in-out;
+}
+
+.content-grid > div:not(.content-grid-bg),
+.nav-grid > div:not(.nav-grid-bg) {
+	transition: opacity 300ms ease-in-out;
+}
+
+/* Default State (Home Page Active, Nav Hidden) */
+.nav-grid-bg {
+	clip-path: inset(0 0 0 100%);
+}
+
+.nav-grid > div:not(.nav-grid-bg) {
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* Toggled State (Nav Open, Home Page Hidden) */
+[data-big-nav='open'] .nav-grid-bg {
+	clip-path: inset(0 0 0 0);
+}
+
+[data-big-nav='open'] .content-grid-bg {
+	clip-path: inset(0 100% 0 0);
+}
+
+[data-big-nav='open'] .content-grid > div:not(.content-grid-bg) {
+	opacity: 0;
+	pointer-events: none;
+}
+
+[data-big-nav='open'] .nav-grid > div:not(.nav-grid-bg) {
+	opacity: 1;
+	pointer-events: auto;
+	transition-delay: 200ms;
+}

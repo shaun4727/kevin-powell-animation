@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Animated Navigation Design</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="stack">
+			<header class="flex-row">
+				<p class="logo">SLOPES</p>
+				<button class="menu-toggle" aria-controls="nav-grid" aria-expanded="false">MENU</button>
+			</header>
+
+			<main class="content-grid" id="main-grid">
+				<div class="content-grid-bg"></div>
+				<div>
+					<h1>Get fit to hit the slopes — winter in Sweden</h1>
+				</div>
+				<div>
+					<p>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate consequuntur, expedita eaque
+						assumenda eveniet reiciendis qui distinctio facilis corrupti iusto.
+					</p>
+					<a href="#" class="button">Send request</a>
+				</div>
+			</main>
+
+			<div class="nav-grid" id="nav-grid">
+				<div class="nav-grid-bg"></div>
+				<div>
+					<h3>Navigation</h3>
+					<ul class="nav-list">
+						<li>Home</li>
+						<li>Destinations</li>
+						<li>Pricing</li>
+						<li>Contact</li>
+					</ul>
+				</div>
+				<div>
+					<h3>Social</h3>
+					<ul class="nav-list">
+						<li>Instagram</li>
+						<li>Twitter</li>
+						<li>Dribbble</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="video-bg">
+				<video autoplay loop muted playsinline>
+					<source src="background.mp4" type="video/mp4" />
+				</video>
+			</div>
+
+			<footer class="flex-row">
+				<p class="text-sub">Copyright here 2022</p>
+				<div class="social-links">Social Links</div>
+			</footer>
+		</div>
+
+		<script src="script.js"></script>
+	</body>
+</html>
