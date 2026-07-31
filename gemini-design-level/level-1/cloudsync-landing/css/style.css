@@ -1,0 +1,172 @@
+:root {
+    --primary-brand-color: #4f46e5;
+    --primary-background: #ffffff;
+    --section-background: #f9fafb;
+    --text-color: #111827;
+    --text-color-muted: #6b7280;
+    --border-radius: 25px;
+    --feature-bg: #f9fafb;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.universal-padding {
+    padding: 0 10%;
+}
+/* ------------------------ font style  */
+
+/* Inter ফন্ট ব্যবহার করতে */
+.font-inter {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Roboto ফন্ট ব্যবহার করতে */
+.font-roboto {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* ------------------------------ button style ----------------  */
+.button {
+    padding: 0.8rem 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.primary-button {
+    background: var(--primary-brand-color);
+    border: 1px solid var(--primary-brand-color);
+    color: white;
+}
+
+.outline-button {
+    border: 1px solid var(--primary-brand-color);
+    background: white;
+}
+/* -------------------------------- header style -----------------  */
+header {
+    display: flex;
+    width: full;
+    justify-content: space-between;
+
+    align-items: center;
+    height: 100px;
+}
+
+header div {
+    font-weight: bold;
+}
+
+header nav {
+    display: flex;
+    gap: 2rem;
+}
+header nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 2rem;
+    color: var(--text-color-muted);
+    align-items: center;
+}
+
+/* --------------------------------- hero section -----------  */
+
+.hero-section {
+    display: flex;
+    gap: 4rem;
+    margin: 4rem 0;
+    align-items: center;
+}
+.hero-section .left-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.hero-section .left-section h1 {
+    text-transform: uppercase;
+}
+.hero-section .left-section p {
+    color: var(--text-color-muted);
+}
+
+.hero-section .right-section .hero-image {
+    width: 30rem;
+    height: 25rem;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+/* --------------------------------------------- feature section ----------------  */
+.feature-section {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--feature-bg);
+    margin: 0 10%;
+    padding: 3rem 0;
+}
+
+.feature-section h2 {
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 5rem;
+}
+
+.feature-section .cards {
+    display: flex;
+    gap: 4rem;
+}
+.feature-section .cards .feature-card {
+    width: 23rem;
+    display: flex;
+    gap: 1.2rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    padding: 1rem;
+    border: 1px solid white;
+    border-radius: 25px;
+    /* 1. Set the initial subtle shadow */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    /* 2. Smoothly animate all changes over 0.3 seconds */
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.feature-section .cards .feature-card:hover {
+    transform: translateY(-8px);
+
+    /* Makes the shadow larger and blurrier to simulate height */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.feature-section .cards .feature-card h3 {
+    text-transform: uppercase;
+}
+.feature-section .cards .feature-card p {
+    text-align: center;
+}
+.feature-section .cards .feature-card .feature-image {
+    width: 4rem;
+}
+
+/* ---------------------------- footer ----------  */
+footer {
+    background: var(--primary-brand-color);
+    padding: 2rem 0;
+    color: white;
+    margin-top: 100px;
+}
+footer p {
+    text-align: center;
+}
