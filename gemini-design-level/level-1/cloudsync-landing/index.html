@@ -3,41 +3,50 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Cloud Sync Landing</title>
+        <title>CloudSync - Modern SaaS Landing Page</title>
+
+        <!-- Styles & Fonts -->
         <link rel="stylesheet" href="./css/style.css" />
-        <link rel="preconnect" href="https://googleapis.com" />
-        <link rel="preconnect" href="https://gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://googleapis.com/css2?family=Inter:wght@400;700&family=Roboto:wght@400;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto:wght@400;700&display=swap"
             rel="stylesheet"
         />
     </head>
     <body>
-        <div class="container">
-            <header>
-                <span aria-label="CloudSync logo">CloudSync</span>
-                <nav aria-label="primary-navigation">
-                    <ul role="menubar">
-                        <li role="none">Home</li>
-                        <li role="none">Features</li>
-                        <li role="none">Pricing</li>
+        <!-- Header Area -->
+        <header class="header">
+            <!-- Container is INSIDE the header -->
+            <div class="container header-container">
+                <!-- Screen readers will read this as a link to the homepage -->
+                <a href="/" class="logo" aria-label="CloudSync Home"
+                    >CloudSync</a
+                >
+
+                <nav aria-label="Main Navigation">
+                    <ul class="nav-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
                     </ul>
-                    <button class="button">Get Started</button>
                 </nav>
-            </header>
-            <main>
-                <section class="hero-section">
-                    <div class="left-section">
+                <button class="button primary-button">Get Started</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Hero Section -->
+            <section id="home" class="hero-section">
+                <div class="container hero-container">
+                    <div class="hero-content">
                         <h1 class="font-inter">
-                            It is a long established fact that a reader will be
-                            distracted by the readable content
+                            Manage your cloud syncing seamlessly
                         </h1>
                         <p class="font-roboto">
-                            It look like readable English. Many desktop
-                            publishing packages and web page editors now use
-                            Lorem Ipsum as their default model text, and a
-                            search for 'lorem ipsum' will uncover many web sites
-                            still in their infancy.
+                            CloudSync provides the fastest, most reliable cloud
+                            data synchronization for teams and individuals.
+                            Start simplifying your workflow today.
                         </p>
                         <div class="button-group">
                             <button class="button primary-button">
@@ -48,65 +57,67 @@
                             </button>
                         </div>
                     </div>
-                    <div class="right-section">
-                        <img
-                            src="../images/hero-thumbnail.png"
-                            alt="this image contains some people who are writing on digital paper"
-                            class="hero-image"
-                        />
+
+                    <div class="hero-image-wrapper">
+                        <!-- aria-hidden="true" tells screen readers to ignore this decorative placeholder -->
+                        <div class="image-placeholder" aria-hidden="true">
+                            <span>Dashboard Preview</span>
+                        </div>
                     </div>
-                </section>
-                <section class="feature-section">
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section id="features" class="feature-section">
+                <div class="container">
                     <h2 class="font-inter">Why Choose CloudSync?</h2>
+
                     <div class="cards">
-                        <div class="feature-card">
-                            <img
-                                src="../images/cib_next-js.png"
-                                alt="it is a logo of next js framework"
-                                class="feature-image"
-                            />
-                            <h3 class="font-inter">randomised words which</h3>
+                        <!-- <article> tag is great for self-contained cards -->
+                        <article class="feature-card">
+                            <div class="icon-wrapper" aria-hidden="true">
+                                🚀
+                            </div>
+                            <h3 class="font-inter">Lightning Fast</h3>
                             <p class="font-roboto">
-                                If you are going to use a passage of Lorem
-                                Ipsum, you need to be sure there If you are
-                                going to use a passage of Lorem Ipsum, you need
-                                to be sure there
+                                Experience unparalleled sync speeds across all
+                                your devices without compromising on security.
                             </p>
-                        </div>
-                        <div class="feature-card">
-                            <img
-                                src="../images/gmail-icon.png"
-                                alt="it is a logo of gmail"
-                                class="feature-image"
-                            />
-                            <h3 class="font-inter">randomised words which</h3>
+                        </article>
+
+                        <article class="feature-card">
+                            <div class="icon-wrapper" aria-hidden="true">
+                                🔒
+                            </div>
+                            <h3 class="font-inter">Bank-Level Security</h3>
                             <p class="font-roboto">
-                                If you are going to use a passage of Lorem
-                                Ipsum, you need to be sure there If you are
-                                going to use a passage of Lorem Ipsum, you need
-                                to be sure there
+                                Your data is encrypted end-to-end. Only you have
+                                access to your most important files.
                             </p>
-                        </div>
-                        <div class="feature-card">
-                            <img
-                                src="../images/devicon_vuejs.png"
-                                alt="it is a logo of vue js framework"
-                                class="feature-image"
-                            />
-                            <h3 class="font-inter">randomised words which</h3>
+                        </article>
+
+                        <article class="feature-card">
+                            <div class="icon-wrapper" aria-hidden="true">
+                                📱
+                            </div>
+                            <h3 class="font-inter">Cross-Platform</h3>
                             <p class="font-roboto">
-                                If you are going to use a passage of Lorem
-                                Ipsum, you need to be sure there If you are
-                                going to use a passage of Lorem Ipsum, you need
-                                to be sure there
+                                Available on Windows, macOS, iOS, and Android.
+                                Sync anywhere, anytime.
                             </p>
-                        </div>
+                        </article>
                     </div>
-                </section>
-            </main>
-            <footer>
-                <p>© 2026 CloudSync. All rights reserved.</p>
-            </footer>
-        </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p class="font-roboto">
+                    &copy; 2026 CloudSync. All rights reserved.
+                </p>
+            </div>
+        </footer>
     </body>
 </html>

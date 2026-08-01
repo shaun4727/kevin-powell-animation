@@ -1,201 +1,283 @@
+/* =========================================
+   1. CSS Variables (Design System)
+========================================= */
 :root {
     --primary-brand-color: #4f46e5;
+    --primary-brand-hover: #4338ca;
     --primary-background: #ffffff;
     --section-background: #f9fafb;
-    --text-color: #111827;
+    --text-color-dark: #111827;
     --text-color-muted: #6b7280;
-    --border-radius: 25px;
-    --feature-bg: #f9fafb;
+    --border-radius: 8px; /* Standardized to a modern SaaS look */
+    --focus-ring-color: #facc15; /* High contrast yellow for a11y */
 }
 
+/* =========================================
+   2. Reset & Base Styles
+========================================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color-dark);
+    background-color: var(--primary-background);
+    line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+.logo,
+.font-inter {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+}
+
+/* =========================================
+   3. Container Architecture
+========================================= */
 .container {
+    width: 100%;
     max-width: 1200px;
-    margin-inline: auto;
+    margin: 0 auto;
     padding: 0 24px;
 }
 
-/* ------------------------ font style  */
-
-/* Inter ফন্ট ব্যবহার করতে */
-.font-inter {
-    font-family: 'Inter', sans-serif;
+/* =========================================
+   4. Accessibility & UI Components (Buttons/Links)
+========================================= */
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
-/* Roboto ফন্ট ব্যবহার করতে */
-.font-roboto {
-    font-family: 'Roboto', sans-serif;
+/* Keboard Navigation Focus States (Crucial for a11y) */
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--focus-ring-color);
+    outline-offset: 3px;
+    border-radius: 4px;
 }
 
-/* ------------------------------ button style ----------------  */
 .button {
-    padding: 0.8rem 1rem;
+    padding: 0.75rem 1.5rem;
     border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-align: center;
 }
 
 .primary-button {
-    background: var(--primary-brand-color);
-    border: 1px solid var(--primary-brand-color);
-    color: white;
+    background-color: var(--primary-brand-color);
+    color: #ffffff;
+    border: 2px solid var(--primary-brand-color);
+}
+
+.primary-button:hover {
+    background-color: var(--primary-brand-hover);
+    border-color: var(--primary-brand-hover);
 }
 
 .outline-button {
-    border: 1px solid var(--primary-brand-color);
-    background: white;
+    background-color: transparent;
+    color: var(--primary-brand-color);
+    border: 2px solid var(--primary-brand-color);
 }
-/* -------------------------------- header style -----------------  */
-header {
+
+.outline-button:hover {
+    background-color: #e0e7ff;
+}
+
+/* =========================================
+   5. Mobile-First Layouts (Default Styles)
+========================================= */
+
+/* Header */
+.header {
+    border-bottom: 1px solid #e5e7eb;
+    background-color: var(--primary-background);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
     display: flex;
-    width: 100%;
     justify-content: space-between;
-
     align-items: center;
-    height: 100px;
+    height: 80px;
 }
 
-header div {
-    font-weight: bold;
+.logo {
+    font-size: 1.5rem;
+    color: var(--primary-brand-color);
 }
 
-header nav {
-    display: flex;
+/* Hide links on mobile to prevent overflow (simplest approach for Level 1) */
+.nav-links {
+    display: none;
+    list-style: none;
     gap: 2rem;
 }
-header nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 2rem;
-    color: var(--text-color-muted);
-    align-items: center;
+
+.nav-links a:hover {
+    color: var(--primary-brand-color);
 }
 
-/* --------------------------------- hero section -----------  */
-
+/* Hero Section */
 .hero-section {
+    padding: 4rem 0;
+}
+
+.hero-container {
     display: flex;
-    flex-direction: column-reverse;
-    justify-content: center;
+    flex-direction: column; /* Stack vertically on mobile */
+    gap: 3rem;
+    text-align: center;
     align-items: center;
 }
 
-.hero-section .left-section {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+.hero-content h1 {
+    font-size: 2.25rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
 }
 
-.hero-section .right-section .hero-image {
-    width: 30rem;
-    aspect-ratio: 1;
-    object-fit: cover;
-}
-.hero-section .left-section h1 {
-    text-transform: uppercase;
-    text-align: center;
-}
-.hero-section .left-section p {
+.hero-content p {
     color: var(--text-color-muted);
-    text-align: center;
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
 }
 
-.hero-section .left-section .button-group {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
-/* --------------------------------------------- feature section ----------------  */
-.feature-section {
-    margin-top: 100px;
+.button-group {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background: var(--feature-bg);
-
-    padding: 3rem 0;
+    gap: 1rem;
+    width: 100%;
 }
+
+/* Placeholder instead of broken image */
+.image-placeholder {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 4/3;
+    background-color: #e0e7ff;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-brand-color);
+    font-weight: 700;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Feature Section */
+.feature-section {
+    background-color: var(--section-background);
+    padding: 5rem 0;
+}
+
 .feature-section h2 {
     text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 5rem;
+    font-size: 2rem;
+    margin-bottom: 3rem;
 }
-.feature-section .cards {
+
+.cards {
     display: grid;
-    grid-template-columns: auto;
-    gap: 1.2rem;
+    grid-template-columns: 1fr; /* 1 Column on Mobile */
+    gap: 2rem;
 }
 
-.feature-section .cards .feature-card {
-    display: flex;
-    gap: 1.2rem;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: white;
-    padding: 1rem;
-    border: 1px solid white;
-    border-radius: 25px;
-
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
+.feature-card {
+    background: var(--primary-background);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     transition:
         transform 0.3s ease,
         box-shadow 0.3s ease;
-}
-.feature-section .cards .feature-card .feature-image {
-    width: 4rem;
+    text-align: center;
 }
 
-.feature-section .cards .feature-card:hover {
+.feature-card:hover {
     transform: translateY(-8px);
-
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-.feature-section .cards .feature-card h3 {
-    text-transform: uppercase;
+.icon-wrapper {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    margin-bottom: 1rem;
+}
+
+.feature-card p {
+    color: var(--text-color-muted);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--primary-brand-color);
+    color: #ffffff;
+    padding: 2rem 0;
     text-align: center;
 }
-.feature-section .cards .feature-card p {
-    text-align: center;
-}
 
-/* ---------------------------- footer ----------  */
-footer {
-    background: var(--primary-brand-color);
-    padding: 1rem 0;
-    color: white;
-    margin-top: 20px;
-}
-footer p {
-    text-align: center;
-}
+/* =========================================
+   6. Breakpoints (Min-Width)
+========================================= */
 
-/* --------------------- smaller desktop style ------------  */
-@media (min-width: 1024px) {
-    .hero-section {
-        display: grid;
-        grid-template-columns: auto auto;
-        gap: 1.2rem;
+/* Tablet Breakpoint */
+@media (min-width: 768px) {
+    .hero-content h1 {
+        font-size: 3rem;
     }
-    .hero-section .left-section h1,
-    .hero-section .left-section p {
+
+    .button-group {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr); /* 2 Columns Grid */
+    }
+}
+
+/* Desktop Breakpoint */
+@media (min-width: 1024px) {
+    .nav-links {
+        display: flex; /* Show Navigation Links */
+    }
+
+    .hero-container {
+        flex-direction: row; /* Side by side */
         text-align: left;
     }
-    .hero-section .left-section .button-group {
-        justify-content: start;
+
+    .hero-content {
+        flex: 1; /* Takes exactly 50% space */
     }
 
-    .feature-section .cards {
-        display: grid;
-        grid-template-columns: auto auto;
-        padding: 1rem;
+    .hero-image-wrapper {
+        flex: 1; /* Takes exactly 50% space */
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .button-group {
+        justify-content: flex-start;
+    }
+
+    .cards {
+        grid-template-columns: repeat(3, 1fr); /* 3 Columns Grid */
     }
 }
