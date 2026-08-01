@@ -14,9 +14,12 @@
     box-sizing: border-box;
 }
 
-.universal-padding {
-    padding: 0 10%;
+.container {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 0 24px;
 }
+
 /* ------------------------ font style  */
 
 /* Inter ফন্ট ব্যবহার করতে */
@@ -49,7 +52,7 @@
 /* -------------------------------- header style -----------------  */
 header {
     display: flex;
-    width: full;
+    width: 100%;
     justify-content: space-between;
 
     align-items: center;
@@ -78,30 +81,36 @@ header nav ul {
 
 .hero-section {
     display: flex;
-    gap: 4rem;
-    margin: 4rem 0;
+    flex-direction: column-reverse;
+    justify-content: center;
     align-items: center;
 }
+
 .hero-section .left-section {
     display: flex;
     flex-direction: column;
     gap: 2rem;
 }
 
-.hero-section .left-section h1 {
-    text-transform: uppercase;
-}
-.hero-section .left-section p {
-    color: var(--text-color-muted);
-}
-
 .hero-section .right-section .hero-image {
     width: 30rem;
-    height: 25rem;
     aspect-ratio: 1;
     object-fit: cover;
 }
+.hero-section .left-section h1 {
+    text-transform: uppercase;
+    text-align: center;
+}
+.hero-section .left-section p {
+    color: var(--text-color-muted);
+    text-align: center;
+}
 
+.hero-section .left-section .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
 /* --------------------------------------------- feature section ----------------  */
 .feature-section {
     margin-top: 100px;
@@ -109,22 +118,21 @@ header nav ul {
     flex-direction: column;
     align-items: center;
     background: var(--feature-bg);
-    margin: 0 10%;
+
     padding: 3rem 0;
 }
-
 .feature-section h2 {
     text-align: center;
     text-transform: uppercase;
     margin-bottom: 5rem;
 }
-
 .feature-section .cards {
-    display: flex;
-    gap: 4rem;
+    display: grid;
+    grid-template-columns: auto;
+    gap: 1.2rem;
 }
+
 .feature-section .cards .feature-card {
-    width: 23rem;
     display: flex;
     gap: 1.2rem;
     flex-direction: column;
@@ -134,39 +142,60 @@ header nav ul {
     padding: 1rem;
     border: 1px solid white;
     border-radius: 25px;
-    /* 1. Set the initial subtle shadow */
+
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
-    /* 2. Smoothly animate all changes over 0.3 seconds */
     transition:
         transform 0.3s ease,
         box-shadow 0.3s ease;
-}
-
-.feature-section .cards .feature-card:hover {
-    transform: translateY(-8px);
-
-    /* Makes the shadow larger and blurrier to simulate height */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-
-.feature-section .cards .feature-card h3 {
-    text-transform: uppercase;
-}
-.feature-section .cards .feature-card p {
-    text-align: center;
 }
 .feature-section .cards .feature-card .feature-image {
     width: 4rem;
 }
 
+.feature-section .cards .feature-card:hover {
+    transform: translateY(-8px);
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.feature-section .cards .feature-card h3 {
+    text-transform: uppercase;
+    text-align: center;
+}
+.feature-section .cards .feature-card p {
+    text-align: center;
+}
+
 /* ---------------------------- footer ----------  */
 footer {
     background: var(--primary-brand-color);
-    padding: 2rem 0;
+    padding: 1rem 0;
     color: white;
-    margin-top: 100px;
+    margin-top: 20px;
 }
 footer p {
     text-align: center;
+}
+
+/* --------------------- smaller desktop style ------------  */
+@media (min-width: 1024px) {
+    .hero-section {
+        display: grid;
+        grid-template-columns: auto auto;
+        gap: 1.2rem;
+    }
+    .hero-section .left-section h1,
+    .hero-section .left-section p {
+        text-align: left;
+    }
+    .hero-section .left-section .button-group {
+        justify-content: start;
+    }
+
+    .feature-section .cards {
+        display: grid;
+        grid-template-columns: auto auto;
+        padding: 1rem;
+    }
 }
