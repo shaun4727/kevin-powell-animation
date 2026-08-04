@@ -1,0 +1,520 @@
+:root {
+    --background: #0f172a;
+    --card-background: #1e293b;
+    --primary-text: #f8fafc;
+    --muted-text: #94a3b8;
+    --brand-color: #38bdf8;
+    --common-radius: 30px;
+    --card-bg: #1e293b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--background);
+}
+
+/* -------------------- fonts -------  */
+.poppins-thin {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 100;
+    font-style: normal;
+}
+
+.poppins-extralight {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 200;
+    font-style: normal;
+}
+
+.poppins-light {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.poppins-regular {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.poppins-medium {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.poppins-semibold {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.poppins-bold {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.poppins-extrabold {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.poppins-black {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+    font-style: normal;
+}
+
+/* --------------------------------- universal styles ---------- */
+
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--brand-color);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+/* ------------------------------- header styles -----------  */
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+header {
+    border-bottom: 1px solid white;
+    position: sticky;
+    top: 0;
+    z-index: 15;
+    background: var(--background);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+.header a {
+    font-weight: bolder;
+}
+
+.header ul {
+    list-style-type: none;
+    display: none;
+    gap: 1.2rem;
+}
+
+.header button,
+.button-container a {
+    background: white;
+    border: var(--brand-color);
+    padding: 1.1rem;
+    border-radius: var(--common-radius);
+    color: var(--brand-color);
+    font-weight: bolder;
+}
+
+/* -------------------- hero section -----------  */
+
+.home {
+    color: white;
+    min-height: 80vh;
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+}
+.home h1 {
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.home p {
+    text-transform: capitalize;
+    text-align: center;
+}
+
+/* gradient animation  */
+@property --button-fill {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: transparent;
+}
+
+@property --button-fill-stop {
+    syntax: '<percentage>';
+    inherits: true;
+    initial-value: 0%;
+}
+
+@property --rg-1-x {
+    syntax: '<percentage>';
+    inherits: true;
+    initial-value: 0%;
+}
+@property --rg-1-y {
+    syntax: '<percentage>';
+    inherits: true;
+    initial-value: 50%;
+}
+@property --rg-2-x {
+    syntax: '<percentage>';
+    inherits: true;
+    initial-value: 20%;
+}
+@property --rg-2-y {
+    syntax: '<percentage>';
+    inherits: true;
+    initial-value: 70%;
+}
+@property --rg-3-x {
+    syntax: '<percentage>';
+    inherits: true;
+    initial-value: 70%;
+}
+@property --rg-3-y {
+    syntax: '<percentage>';
+    inherits: true;
+    initial-value: 20%;
+}
+@property --rg-4-x {
+    syntax: '<percentage>';
+    inherits: true;
+    initial-value: 50%;
+}
+@property --rg-4-y {
+    syntax: '<percentage>';
+    inherits: true;
+    initial-value: 50%;
+}
+.gradient-shape {
+    position: absolute;
+    right: -60px;
+    width: 250px;
+    height: 250px;
+    padding: 0.5lh 4ch;
+    border-radius: 100vw;
+    border: 5px solid transparent;
+    color: white;
+    transition:
+        --button-fill 1s,
+        --button-fill-stop 0.5s;
+    animation: gradient-movement 5s alternate infinite ease-in-out;
+    animation-delay: calc(sibling-index() * -2000ms);
+    /* ১২০px সাইজের একটি গোলাপি আলোর বল তৈরি করে বর্ডার এরিয়ায় সেট করছে, যার পজিশন ভেরিয়েবলের মাধ্যমে এনিমেশন পাবে */
+    background:
+        radial-gradient(
+                circle,
+                var(--button-fill) var(--button-fill-stop),
+                transparent
+            )
+            padding-box,
+        radial-gradient(
+                circle 120px at var(--rg-1-x) var(--rg-1-y),
+                deeppink,
+                transparent
+            )
+            border-box,
+        radial-gradient(
+                circle 150px at var(--rg-2-x) var(--rg-2-y),
+                royalblue,
+                transparent
+            )
+            border-box,
+        radial-gradient(
+                circle 160px at var(--rg-3-x) var(--rg-3-y),
+                rebeccapurple,
+                transparent
+            )
+            border-box,
+        radial-gradient(
+                circle 200px at var(--rg-4-x) var(--rg-4-y),
+                lime,
+                transparent
+            )
+            border-box;
+    background-position:
+        center,
+        center,
+        bottom right,
+        top left,
+        top right,
+        bottom left;
+    background-repeat: no-repeat;
+}
+
+.gradient-button:hover,
+red .gradient-button:focus-visible {
+    --button-fill-stop: 100%;
+    --button-fill: var(--button-fill-hover, #222);
+}
+
+.gradient-button.bordered {
+    --button-fill-stop: 100%;
+    --button-fill: black;
+}
+
+.gradient-button.bordered:is(:hover, :focus-visible) {
+    --button-fill-stop: 0%;
+    --button-fill: transparent;
+}
+
+@keyframes gradient-movement {
+    30% {
+        --rg-1-x: 70%;
+        --rg-1-y: 20%;
+    }
+    40% {
+        --rg-2-x: 120%;
+        --rg-2-y: 50%;
+    }
+    45% {
+        --rg-4-x: -10%;
+        --rg-4-y: 10%;
+    }
+    50% {
+        --rg-3-x: 50%;
+        --rg-3-y: 50%;
+    }
+    70% {
+        --rg-1-x: -10%;
+        --rg-2-y: -20%;
+    }
+}
+
+.accent-color {
+    color: var(--brand-color);
+}
+
+/* ---------------------------------- services ----------  */
+
+.services {
+    color: white;
+    min-height: 80vh;
+    padding: 120px 0;
+    margin: 20px;
+}
+
+.services h2 {
+    text-transform: uppercase;
+    text-align: left;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+}
+
+.services .cards .feature-card {
+    background: var(--card-bg);
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-radius: var(--common-radius);
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    border-bottom: 3px solid var(--brand-color);
+}
+
+.services .cards .feature-card .icon-wrapper {
+    font-size: 50px;
+}
+
+/* --------------------------- about -----------------  */
+
+.about {
+    color: white;
+    min-height: 80vh;
+    margin: 20px;
+    display: grid;
+    grid-template-columns: auto;
+}
+.about > *:nth-child(1) {
+    order: 1;
+}
+.about .left .image-wrapper {
+    position: relative;
+}
+
+.about .left img.placeholder-image {
+    width: 100%;
+    margin-top: 120px;
+}
+
+.about .left .image-wrapper span {
+    background: var(--brand-color);
+    padding: 7px;
+    border: 1px solid var(--brand-color);
+    border-radius: var(--common-radius);
+    position: absolute;
+    bottom: 2rem;
+    right: 0;
+}
+
+.about .right {
+    margin-top: 25px;
+}
+
+.about .right h2 {
+    text-transform: uppercase;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.about .right .button-container {
+    width: 100%;
+    position: relative;
+    min-height: 5rem;
+    margin-top: 30px;
+}
+
+.about .right button {
+    background: white;
+    border: var(--brand-color);
+    padding: 1.1rem;
+    border-radius: var(--common-radius);
+    color: var(--brand-color);
+    font-weight: bolder;
+    font-size: 1.2rem;
+    margin-top: 25px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    text-transform: uppercase;
+}
+
+/* -------------------------- footer ------------  */
+
+.footer-container {
+    border-top: 1px solid white;
+}
+footer {
+    color: white;
+    display: grid;
+    grid-template-columns: auto;
+    padding: 80px 20px;
+    gap: 2rem;
+}
+
+footer .first-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+footer .first-col img {
+    width: 50px;
+}
+
+footer .second-col,
+footer .third-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer a {
+    text-decoration: underline;
+}
+
+footer .fourth-col {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+footer .fourth-col img {
+    width: 20px;
+    height: 20px;
+}
+
+/* ------------------------ responsiveness -----------  */
+
+/* --------- tablet  */
+
+@media (min-width: 768px) {
+    main {
+        margin: 0 30px;
+    }
+    main .home h1 {
+        font-size: 3rem;
+    }
+
+    p {
+        font-size: 1.2rem;
+    }
+
+    /* ------------------ services  */
+    .services h2 {
+        font-size: 2.5rem;
+    }
+    .services .cards {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    /* ------------------------ about  */
+    .about .right h2 {
+        font-size: 2.5rem;
+    }
+
+    /* ---------------------------- footer  */
+    footer {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
+/* ------------- desktop  */
+
+@media (min-width: 1024px) {
+    .header ul {
+        display: flex;
+    }
+
+    .services .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    .about {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .about > *:nth-child(2) {
+        order: 1;
+    }
+
+    .about .left img.placeholder-image {
+        margin-top: 0px;
+    }
+
+    footer {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1140px;
+        margin: 0 auto;
+    }
+}
